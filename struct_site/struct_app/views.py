@@ -15,6 +15,13 @@ class GroupListView(APIView):
         return Response(serializer.data)
 
 
-
-
-
+class UnitsListView(APIView):
+    def get(self, request, format=None):
+        queryset = Unit.objects.all()  #50 000
+        params = request.query_params
+        group = params.get('group', None)
+        if group:
+            queryset = queryset.filter(group=group)
+            serializer = UnitSerializer(queryset, many=True)
+            return Response(serializer.data)
+        return Response("")
