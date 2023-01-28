@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 
+
 # Create your models here.
 class Group(MPTTModel):
     title = models.CharField(max_length=100, verbose_name='Подразделение')
@@ -17,8 +18,20 @@ class Group(MPTTModel):
         verbose_name = 'Подразделение'
         verbose_name_plural = 'Подразделения'
 
-    def get_absolute_url(self):
-        return reverse('units-by-group', args=[str(self.slug)])
-
     def __str__(self):
         return self.title
+
+
+class Unit(models.Model):
+    employeeName = models.CharField(max_length=50, verbose_name='ФИО сотрудника')
+    employeePost = models.CharField(max_length=50, verbose_name='Должность')
+    dateOfJoining = models.DateField()
+    slug = models.SlugField(max_length=150)
+    group = TreeForeignKey('Group', on_delete=models.CASCADE, related_name='units', verbose_name='Подразделение')
+
+    class Meta:
+        verbose_name = 'Сотрудник'
+        verbose_name_plural = 'Сотрудники'
+
+    def __str__(self):
+        return self.employeeName

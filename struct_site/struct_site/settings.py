@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'mptt',
+    'django_mptt_admin',
     'struct_app',
+
 ]
 
 MIDDLEWARE = [
