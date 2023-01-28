@@ -3,5 +3,6 @@ from .views import *
 
 urlpatterns = [
     path('allgroup', GroupListView.as_view(), name='group-list'),
-    path('group', UnitsListView.as_view(), name='units-in-group-list'),
+    path('group/<slug:group_slug>/', UnitsListView.as_view()),
+    path('group', UnitsListView.as_view()),
 ]

@@ -2,6 +2,8 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.views.generic import ListView
+from rest_framework.decorators import api_view
+
 from .models import Group, Unit
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -16,12 +18,40 @@ class GroupListView(APIView):
 
 
 class UnitsListView(APIView):
-    def get(self, request, format=None):
-        queryset = Unit.objects.all()  #50 000
-        params = request.query_params
-        group = params.get('group', None)
-        if group:
-            queryset = queryset.filter(group=group)
-            serializer = UnitSerializer(queryset, many=True)
-            return Response(serializer.data)
-        return Response("")
+    def get(self, request, group_slug=None, format=None):
+        if group_slug:
+            group = Group.objects.get(slug=group_slug)
+        else:
+            group = request.query_params.get('group', None)
+
+        queryset = Unit.objects.filter(group=group)
+        serializer = UnitSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self,request, group_slug=None):
+        query = request.data
+        serialize_data = UnitSerializer(data=query)
+        if serialize_data.is_valid():
+            serialize_data.save()
+            return Response("Added Successfully")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
