@@ -10,6 +10,7 @@ class Group(MPTTModel):
                             db_index=True, verbose_name='Вышестоящее подразделение')
     slug = models.SlugField()
 
+
     class MPTTMeta:
         order_insertion_by = ['title']
 
@@ -20,6 +21,14 @@ class Group(MPTTModel):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        url = "/%s" % self.slug
+        page = self
+        while page.parent:
+            url = "/%s%s" % (page.parent.slug, url)
+            page = page.parent
+        return url
 
 
 class Unit(models.Model):

@@ -1,8 +1,9 @@
-from django.urls import path,include
+from django.urls import path, re_path, include
 from .views import *
 
+
 urlpatterns = [
-    path('allgroup', GroupListView.as_view(), name='group-list'),
-    path('group/<slug:group_slug>/', UnitsListView.as_view()),
-    path('group', UnitsListView.as_view()),
+    path('group/all/', GroupListView.as_view()),
+    re_path(r"group/detail/(?P<tree_hierarchy>.*)", GroupDetailView.as_view()),
+    re_path(r'.units', UnitsListView.as_view(),)
 ]

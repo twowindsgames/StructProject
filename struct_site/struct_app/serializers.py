@@ -11,6 +11,21 @@ class GroupSerializer(serializers.ModelSerializer):
             "title",
             "slug",
             "parent",
+            "children",
+            "get_absolute_url",
+        )
+
+
+class GroupDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = (
+            "id",
+            "title",
+            "slug",
+            "parent",
+            "children",
+            "get_absolute_url",
         )
 
 
