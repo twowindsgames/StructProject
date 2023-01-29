@@ -20,12 +20,15 @@ class GroupListView(APIView):
 class GroupDetailView(APIView):
     def get(self, request, tree_hierarchy, format=None):
         if tree_hierarchy:
+
             category_slug = tree_hierarchy.split('/')
             parent = None
             root = Group.objects.all()
             for slug in category_slug[:-1]:
                 parent = root.get(parent=parent, slug=slug)
-                group = Group.objects.filter(parent=parent, slug=category_slug[-1])
+
+
+            group = Group.objects.filter(parent=parent, slug=category_slug[-1])
 
         else:
             group = Group.objects \
