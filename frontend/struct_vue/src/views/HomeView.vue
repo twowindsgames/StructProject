@@ -15,16 +15,24 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="product in latestProducts"
+            <tr v-for="product in groups"
                 v-bind:key="product.id">
               <td>{{ product.slug }}</td>
 
             </tr>
+
             </tbody>
           </table>
+
         </div>
         <h6 className="is-size-3">AllProducts</h6>
+            <recursive_tree v-for="group in groups" v-bind:key="group.id" >
+               <recursive_tree :slug="group.slug" :children="group.children"></recursive_tree>
+            </recursive_tree>
 
+            <div v-for="group in groups" v-bind:key="group.id" >
+                <recursive_tree :slug="group.slug" :children="group.children" :depth="0"></recursive_tree>
+            </div>
 
       </div>
     </section>
@@ -35,25 +43,29 @@
 
 <script>
 import axios from 'axios'
-
+import recursive_tree from '../components/recursive_tree.vue'
 export default {
   name: 'HomeView',
   data() {
     return {
-      latestProducts: []
+      groups: []
     }
   },
   mounted() {
     this.getLatestProducts()
 
   },
+  components:{
+    recursive_tree
+  }
+  ,
   methods: {
     getLatestProducts() {
 
       axios
           .get('/api/group/all/')
           .then(response => {
-            this.latestProducts = response.data
+            this.groups = response.data
           })
           .catch(error => {
             console.log(error)
@@ -65,7 +77,7 @@ export default {
       axios
           .get('/api/v1/winter-products/', {params: {category: 2}})
           .then(response => {
-            this.latestProducts = response.data
+            this.groups = response.data
           })
           .catch(error => {
             console.log(error)

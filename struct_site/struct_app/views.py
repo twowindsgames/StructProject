@@ -12,7 +12,7 @@ from .serializers import *
 
 class GroupListView(APIView):
     def get(self, request):
-        groups = Group.objects.all()
+        groups = Group.objects.root_nodes()
         serializer = GroupSerializer(groups, many=True)
         return Response(serializer.data)
 
