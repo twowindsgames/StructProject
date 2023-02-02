@@ -1,31 +1,70 @@
-<template>
-  <div class="home">
 
-<div class="columns  ">
-      <div class="column is-one-quarter  has-background-primary-dark has-text-centered  ">
+<template>
+  <q-layout view="hhh lpr fff">
+
+    <q-header elevated class="bg-primary text-white">
+      <q-toolbar>
+        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+
+        <q-toolbar-title>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+          </q-avatar>
+          Title
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-header>
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
+      <div>
+
 
         <div v-for="group in groups" v-bind:key="group.id" >
-
                 <recursive_tree :slug="group.slug" :children="group.children" :depth="0"></recursive_tree>
-            </div>
+        </div>
       </div>
-      <div class=" column is-three-quarters has-background-info-dark has-text-centered ">
-            <div v-for="group in groups" v-bind:key="group.id" >
 
-                <recursive_tree :slug="group.slug" :children="group.children" :depth="0"></recursive_tree>
-            </div>
-      </div>
- </div>
+      <!-- drawer content -->
+    </q-drawer>
 
+    <q-page-container>
+      <router-view />
+    </q-page-container>
 
-  </div>
+    <q-footer elevated class="bg-grey-8 text-white">
+      <q-toolbar>
+        <q-toolbar-title>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+          </q-avatar>
+          <div>Title</div>
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
+
+  </q-layout>
 </template>
+
+
+
+
 
 <script>
 import axios from 'axios'
+import { ref } from 'vue'
 import recursive_tree from '../components/recursive_tree.vue'
+
 export default {
   name: 'HomeView',
+  setup () {
+    const leftDrawerOpen = ref(false)
+
+    return {
+      leftDrawerOpen,
+      toggleLeftDrawer () {
+        leftDrawerOpen.value = !leftDrawerOpen.value
+      }
+    }
+  },
   data() {
     return {
       groups: []
@@ -40,6 +79,7 @@ export default {
   }
   ,
   methods: {
+
     getLatestProducts() {
 
       axios
