@@ -1,41 +1,21 @@
 <template>
-  <div className="home">
-    <section className="hero is-medium is-dark ">
+  <div class="home">
 
-      <div className="button is-info " v-on:click="winter">Get Winter Only</div>
-      <div className="hero-body has-text-centered ">
+<div class="columns  ">
+      <div class="column is-one-quarter  has-background-primary-dark has-text-centered  ">
 
-        <div className="column is-center">
-          <table className="table table mx-auto">
-            <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Price</th>
-              <th scope="col">Category</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="product in groups"
-                v-bind:key="product.id">
-              <td>{{ product.slug }}</td>
+        <div v-for="group in groups" v-bind:key="group.id" >
 
-            </tr>
-
-            </tbody>
-          </table>
-
-        </div>
-        <h6 className="is-size-3">AllProducts</h6>
-            <recursive_tree v-for="group in groups" v-bind:key="group.id" >
-               <recursive_tree :slug="group.slug" :children="group.children"></recursive_tree>
-            </recursive_tree>
-
-            <div v-for="group in groups" v-bind:key="group.id" >
                 <recursive_tree :slug="group.slug" :children="group.children" :depth="0"></recursive_tree>
             </div>
-
       </div>
-    </section>
+      <div class=" column is-three-quarters has-background-info-dark has-text-centered ">
+            <div v-for="group in groups" v-bind:key="group.id" >
+
+                <recursive_tree :slug="group.slug" :children="group.children" :depth="0"></recursive_tree>
+            </div>
+      </div>
+ </div>
 
 
   </div>
