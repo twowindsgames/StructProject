@@ -15,6 +15,7 @@ class GroupSerializer(serializers.ModelSerializer):
             "parent",
             "children",
             "get_absolute_url",
+            "is_leaf_node"
         )
 
 
