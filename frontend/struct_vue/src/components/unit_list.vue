@@ -1,20 +1,6 @@
 <template>
-  <div class="recursive_tree" >
-    <div :style="indent"  @click="toggleChildren"><div  @click="getUnitsByGroup(groupId)">{{ slug }}</div></div>
+  <div class="unit_list" >
 
-   <div v-if="isShow">
-      <recursive_tree
-      v-for="group in children"
-
-      v-bind:key="group.id"
-      :slug="group.slug"
-      :children="group.children"
-      :depth="depth + 1"
-      :group-id = "group.id"
-      >
-
-   </recursive_tree>
-   </div>
   </div>
 </template>
 <script>

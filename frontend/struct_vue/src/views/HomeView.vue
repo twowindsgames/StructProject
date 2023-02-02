@@ -17,9 +17,8 @@
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
       <div>
 
-
         <div v-for="group in groups" v-bind:key="group.id" >
-                <recursive_tree  :slug="group.slug" :children="group.children" :depth="0"  :group-id="group.id"></recursive_tree>
+            <recursive_tree  :slug="group.slug" :children="group.children" :depth="0"  :group-id="group.id"></recursive_tree>
         </div>
       </div>
 
@@ -27,7 +26,7 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+
     </q-page-container>
 
     <q-footer elevated class="bg-grey-8 text-white">
@@ -42,6 +41,7 @@
     </q-footer>
 
   </q-layout>
+  <router-view />
 </template>
 
 
