@@ -13,9 +13,9 @@ class GroupSerializer(serializers.ModelSerializer):
             "title",
             "slug",
             "parent",
-            "children",
             "get_absolute_url",
-            "is_leaf_node"
+            "is_leaf_node",
+            "children",
         )
 
 
@@ -27,8 +27,8 @@ class GroupDetailSerializer(serializers.ModelSerializer):
             "title",
             "slug",
             "parent",
-            "children",
             "get_absolute_url",
+            "children",
         )
 
 

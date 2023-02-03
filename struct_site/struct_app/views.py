@@ -28,13 +28,13 @@ class GroupDetailView(APIView):
                 parent = root.get(parent=parent, slug=slug)
 
 
-            group = Group.objects.filter(parent=parent, slug=category_slug[-1])
+            group = Group.objects.get(parent=parent, slug=category_slug[-1])
 
         else:
             group = Group.objects \
                 .get(request.query_params.get('groupId', None))
 
-        serializer = GroupDetailSerializer(group, many=True)
+        serializer = GroupDetailSerializer(group)
         return Response(serializer.data)
 
 

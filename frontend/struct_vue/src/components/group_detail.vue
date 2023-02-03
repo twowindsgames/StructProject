@@ -1,31 +1,14 @@
 <template>
-  <div class="recursive_tree" >
-    <div :style="indent"  @click="toggleChildren">
-      <router-link :to="'/structure' + get_absolute_url" class="button is-dark">{{ slug }}</router-link>
-    </div>
+  <div class="unit_list" >
 
-   <div v-if="isShow">
-      <recursive_tree
-      v-for="group in children"
-
-      v-bind:key="group.id"
-      :slug="group.slug"
-      :children="group.children"
-      :depth="depth + 1"
-      :group-id = "group.id"
-      :get_absolute_url = "group.get_absolute_url"
-      >
-
-   </recursive_tree>
-   </div>
   </div>
 </template>
 <script>
   import axios from "axios";
 
   export default {
-    props: [ 'slug', 'children', 'depth', 'groupId', 'get_absolute_url'],
-    name: 'recursive_tree',
+    props: [ 'slug', 'titile'],
+    name: 'group_detail',
     data() {
       return { isShow: false }
     },
