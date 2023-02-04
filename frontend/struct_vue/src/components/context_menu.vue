@@ -1,48 +1,34 @@
 <template>
 
-
-      <q-menu
+      <q-menu transition-duration="0"
         touch-position
         context-menu>
 
         <q-list dense style="min-width: 100px">
-          <q-item clickable v-close-popup >
-            <q-item-section @click="goEditModalWindow" >Open...</q-item-section>
+
+           <q-item v-show="readyToDelete" clickable v-close-popup >
+            <q-item-section @click="DeleteNode" > Подтвердить удаление</q-item-section>
           </q-item>
-          <q-item clickable v-close-popup>
-            <q-item-section>New</q-item-section>
+          <q-item  v-show="!readyToDelete" clickable  v-close-popup  @click="OpenMenu" >
+            <q-item-section  @click="ReadyToDeleteNode"  >Удалить</q-item-section>
           </q-item>
+
+
+
           <q-separator />
           <q-item clickable>
-            <q-item-section>Preferences</q-item-section>
+            <q-item-section>Редактировать</q-item-section>
             <q-item-section side>
               <q-icon name="keyboard_arrow_right" />
             </q-item-section>
 
             <q-menu anchor="top end" self="top start">
               <q-list>
-                <q-item
-                  v-for="n in 3"
-                  :key="n"
-                  dense
-                  clickable
-                >
-                  <q-item-section>Submenu Label</q-item-section>
-                  <q-item-section side>
-                    <q-icon name="keyboard_arrow_right" />
-                  </q-item-section>
-                  <q-menu auto-close anchor="top end" self="top start">
-                    <q-list>
-                      <q-item
-                        v-for="n in 3"
-                        :key="n"
-                        dense
-                        clickable
-                      >
-                        <q-item-section>3rd level Label</q-item-section>
-                      </q-item>
-                    </q-list>
-                  </q-menu>
+                <q-item clickable v-close-popup>
+                   <q-item-section>Изменить данные </q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup>
+                   <q-item-section>Добавить подчиненное подрзделение </q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
@@ -50,7 +36,7 @@
           </q-item>
           <q-separator />
           <q-item clickable v-close-popup>
-            <q-item-section>Quit</q-item-section>
+            <q-item-section>Закрыть</q-item-section>
           </q-item>
         </q-list>
 
@@ -60,28 +46,43 @@
 </template>
 
 <script>
+
+
+
 import axios from "axios";
 
 export default {
   name: "context_menu",
-  props: [ 'group_id'],
+  props: [ 'group_id', "readyToDelete"],
+  setup () {
 
-     methods: {
-       goEditModalWindow() {
-      axios
-          .get('api/units', {params: {groupId: this.group_id}})
-          .then(response => {
-            this.groups = response.data
-          })
-          .catch(error => {
-            console.log(error)
-          })
+
+    return {
+        OpenMenu(){
+
+        }
 
     }
-    },
+  },
+  mounted() {
+
+  },
+
+
+  methods: {
+       ReadyToDeleteNode() {
+       this.$emit('clickToDelete')
+
+},
+       DeleteNode() {
+       axios.get('api/delete', {params: {groupId: this.group_id}})
+
+}
+  }
 }
 </script>
 
 <style scoped>
+
 
 </style>
