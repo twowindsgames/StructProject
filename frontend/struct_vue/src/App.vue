@@ -22,7 +22,6 @@
    </q-drawer>
 
     <q-page-container>
-      <router-link to="/structure" class="button is-dark"> TO structure </router-link>
        <section class="section">
           <router-view name="info" :key="$route.path" />
       </section>

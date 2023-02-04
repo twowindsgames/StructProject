@@ -4,13 +4,11 @@
 
     <q-page-sticky position="top" expand class="bg-accent text-white">
        <div>
-        ssssssss {{ group.title }}
+        Подразделение: {{ group.title }}
       </div>
     </q-page-sticky>
 
-    <div v-if=isLoadUnits>
-       Загрузка
-    </div>
+    <div v-if=isLoadUnits>...</div>
 
 
 
@@ -35,6 +33,7 @@ import axios from 'axios'
 
 
 
+
 export default {
   name: 'GroupInfo',
 
@@ -50,6 +49,7 @@ export default {
      this.getGroupDetailInfo()
 
   },
+
   methods: {
 
     getGroupDetailInfo() {

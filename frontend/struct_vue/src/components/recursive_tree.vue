@@ -1,7 +1,7 @@
 <template>
   <div class="recursive_tree" >
     <div :style="indent"  @click="toggleChildren">
-      <router-link :to="'/structure' + get_absolute_url" class="button is-dark">{{ slug }}</router-link>
+      <router-link :to="'/structure' + get_absolute_url" class="button is-dark">{{ slug }}<context_menu :group_id="groupId"></context_menu></router-link>
     </div>
 
    <div v-if="isShow">
@@ -22,7 +22,7 @@
 </template>
 <script>
   import axios from "axios";
-
+  import context_menu from './context_menu.vue'
   export default {
     props: [ 'slug', 'children', 'depth', 'groupId', 'get_absolute_url'],
     name: 'recursive_tree',
@@ -34,6 +34,10 @@
         return { transform: `translate(${this.depth * 50}px)` }
       }
     },
+     components:{
+    context_menu,
+
+  },
      methods: {
       toggleChildren() {
         this.isShow = !this.isShow;
