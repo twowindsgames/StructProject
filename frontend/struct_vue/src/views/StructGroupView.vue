@@ -2,16 +2,8 @@
   <div class="struct">
 
 
-    <q-page-sticky position="top" expand class="bg-accent text-white">
-       <div>
-         SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-      </div>
 
-
-
-      <!-- drawer content -->
-    </q-page-sticky>
-   <div v-for="group in groups" v-bind:key="group.id" >
+        <div v-for="group in groups" v-bind:key="group.id" >
             <recursive_tree  :slug="group.slug" :children="group.children" :depth="0"  :group-id="group.id" :get_absolute_url="group.get_absolute_url"></recursive_tree>
         </div>
 

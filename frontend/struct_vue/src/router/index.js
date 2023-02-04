@@ -9,6 +9,7 @@ const routes = [
     components: {
       default: StructGroupView,
       info: InfoView,
+      struct: StructGroupView,
     },
   },
 

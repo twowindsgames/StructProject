@@ -16,9 +16,9 @@
 
 
    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
-       <div v-for="group in groups" v-bind:key="group.id" >
-            <recursive_tree  :slug="group.slug" :children="group.children" :depth="0"  :group-id="group.id" :get_absolute_url="group.get_absolute_url"></recursive_tree>
-        </div>
+        <section class="section">
+          <router-view name="struct"/>
+      </section>
    </q-drawer>
 
     <q-page-container>
@@ -26,8 +26,9 @@
        <section class="section">
           <router-view name="info" :key="$route.path" />
       </section>
-
     </q-page-container>
+
+
 
     <q-footer elevated class="bg-grey-8 text-white">
       <q-toolbar>
@@ -47,9 +48,9 @@
 
 
 import { ref } from 'vue'
-import axios from 'axios'
 
-import recursive_tree from './components/recursive_tree.vue'
+
+
 
 export default {
   setup () {
@@ -62,33 +63,7 @@ export default {
       }
     }
   },
- data() {
-    return {
-      groups: []
-    }
-  },
-  mounted() {
-    this.getLatestProducts()
 
-  },
-  components:{
-    recursive_tree
-  },
-  methods: {
-
-    getLatestProducts() {
-
-      axios
-          .get('/api/group/all/')
-          .then(response => {
-            this.groups = response.data
-          })
-          .catch(error => {
-            console.log(error)
-          })
-
-    }
-  }
 }
 </script>
 

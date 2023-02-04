@@ -40,8 +40,8 @@ class GroupDetailView(APIView):
 
 class UnitsListView(APIView):
     def get(self, request):
-        group = request.query_params.get('groupId', None)
-        queryset = Unit.objects.filter(group=group)
+        groupId = request.query_params.get('groupId', None)
+        queryset = Unit.objects.filter(group=groupId)
         serializer = UnitSerializer(queryset, many=True)
         return Response(serializer.data)
 

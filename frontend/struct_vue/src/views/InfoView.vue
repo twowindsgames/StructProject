@@ -6,12 +6,19 @@
        <div>
         ssssssss {{ group.title }}
       </div>
-
-
-
     </q-page-sticky>
 
+    <div v-if=isLoadUnits>
+       Загрузка
+    </div>
 
+
+
+    <div v-if=!isLoadUnits>
+        <div  v-for="unit in units" v-bind:key="unit.id" >
+            <div>{{unit.employeeName}}</div>
+        </div>
+    </div>
 
 
 
@@ -33,30 +40,47 @@ export default {
 
   data() {
     return {
-      group: {}
-
+      group: {},
+      units: [],
+      isLoadUnits:false,
     }
   },
-  mounted() {
-    this.getLatestProducts()
+   mounted() {
+     this.isLoadUnits = true;
+     this.getGroupDetailInfo()
 
   },
   methods: {
 
-    getLatestProducts() {
+    getGroupDetailInfo() {
 
       const tree_hierarchy = this.$route.params.tree_hierarchy
       axios
           .get(`/api/group/${tree_hierarchy}`)
           .then(response => {
-            this.group = response.data
+           this.group = response.data
+           this.getGroupUnits(this.group.id)
           })
           .catch(error => {
             console.log(error)
           })
 
-    }
+    },
+    getGroupUnits(groupId) {
+    axios
+        .get("/api/units",{ params: { groupId: groupId }})
+        .then(response => {
+          this.units = response.data
+          this.isLoadUnits = false;
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
   },
+},
+
+
 
 
 }
