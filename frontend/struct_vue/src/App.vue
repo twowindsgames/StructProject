@@ -25,6 +25,7 @@
        <section class="section">
           <router-view name="info" :key="$route.path" />
       </section>
+
     </q-page-container>
 
 
@@ -51,7 +52,9 @@ import { ref } from 'vue'
 
 
 
+
 export default {
+
   setup () {
     const leftDrawerOpen = ref(false)
 

@@ -24,7 +24,7 @@
 
             <q-menu anchor="top end" self="top start">
               <q-list>
-                <q-item clickable v-close-popup>
+                <q-item clickable v-close-popup @click="showModal">
                    <q-item-section>Изменить данные </q-item-section>
                 </q-item>
                 <q-item clickable v-close-popup>
@@ -43,6 +43,8 @@
       </q-menu>
 
 
+  <modal_menu v-model="modalVisible" ></modal_menu>
+
 </template>
 
 <script>
@@ -51,25 +53,21 @@
 
 import axios from "axios";
 
+import modal_menu from "@/components/modal_menu";
+
 export default {
   name: "context_menu",
+  components: {modal_menu},
   props: [ 'group_id', "readyToDelete"],
-  setup () {
-
-
-    return {
-        OpenMenu(){
-
-        }
-
-    }
-  },
-  mounted() {
-
+  data(){
+   return { modalVisible : false}
   },
 
 
   methods: {
+    showModal() {
+      this.modalVisible = true;
+    },
        ReadyToDeleteNode() {
        this.$emit('clickToDelete')
 
