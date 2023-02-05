@@ -4,7 +4,11 @@
     <div :style="indent"  @click="toggleChildren">
 
       <router-link :to="'/structure' + group.get_absolute_url" class="button is-dark">{{ group.slug }}
-        <context_menu @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowEditTree="OnShowEditTree" :group="group" :readyToDelete="checkToDelete()"></context_menu>
+        <context_menu
+            @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
+            :group="group"
+            :readyToDelete="checkToDelete()">
+        </context_menu>
       </router-link>
 
       <div v-if="checkToDelete()"> toDelete </div>
@@ -14,8 +18,7 @@
       <recursive_tree
       v-for="group in group.children"
       v-bind:key="group.id"
-        @Delete="OnDelete"
-        @ShowEditTree="OnShowEditTree"
+        @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
         :group="group"
         :depth="depth + 1"
         :isParentReadyToDelete="checkToDelete()"

@@ -5,7 +5,8 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 # Create your models here.
 class Group(MPTTModel):
-    title = models.CharField(max_length=100, verbose_name='Подразделение')
+    title = models.CharField(max_length=20, verbose_name='Краткое наименование')
+    full_title = models.CharField(max_length=100, verbose_name='Полное наименование')
     parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name='Вышестоящее подразделение')
     slug = models.SlugField()

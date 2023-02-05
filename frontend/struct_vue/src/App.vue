@@ -1,7 +1,7 @@
 <template>
-  <q-layout view="hhh lpr fff">
+  <q-layout view="hhh    fff" >
 
-  <q-header elevated class="bg-primary text-white">
+  <q-header elevated  class="bg-indigo-5 text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
@@ -16,17 +16,16 @@
 
 
    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
-        <section class="section">
+     <section class="section">
           <router-view name="struct"/>
       </section>
    </q-drawer>
 
     <q-page-container>
        <section class="section">
-          <router-view name="info" :key="$route.path" />
+         <q-page><router-view name="info" :key="$route.path" /></q-page>
       </section>
-
-    </q-page-container>
+   </q-page-container>
 
 
 
