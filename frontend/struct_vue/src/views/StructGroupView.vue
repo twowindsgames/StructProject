@@ -10,7 +10,9 @@
                  >
             </recursive_tree>
         </div>
-<modal_menu v-model="editTreeModalView" :title="modalOptions.title"> <post_form @DataPost="OnDataPost"></post_form>  </modal_menu>
+<modal_menu v-model="editTreeModalView" :title="modalOptions.title">
+  <post_form @DataPost="OnDataPost" :mode="modalOptions.mode" :current_data="null" ></post_form>
+</modal_menu>
   </div>
  <router-view />
 </template>
@@ -65,14 +67,14 @@ export default defineComponent({
      axios.get('api/delete', {params: {groupId: id}})
     },
     OnDataPost(post_data){
-     if (this.modalOptions.mode==="add")  axios.get('api/postadd', {params: {data: post_data.title}})
-     if (this.modalOptions.mode==="edit")  axios.get('api/postedit', {params: {data: post_data.title}})
+     if (this.modalOptions.mode==="add node")  axios.get('api/postadd', {params: {data: post_data.title}})
+     if (this.modalOptions.mode==="edit node")  axios.get('api/postedit', {params: {data: post_data.title}})
     },
     OnShowEditTree(mode,group) {
     this.modalOptions.mode = mode
     this.modalOptions.group = group
     if (mode==="edit")  this.modalOptions.title = "Изменить информацию о подразделении"
-    else  this.modalOptions.title = "Добавить подчиненное подрзделение"
+    else  this.modalOptions.title = "Добавить подчиненное подразделение"
     this.editTreeModalView=true
     },
   }

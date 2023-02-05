@@ -24,10 +24,10 @@
 
             <q-menu anchor="top end" self="top start">
               <q-list>
-                <q-item clickable v-close-popup @click="$emit('ShowEditTree','edit')">
+                <q-item clickable v-close-popup @click="$emit('ShowEditTree','edit node')">
                    <q-item-section>Изменить информацию о подразделении </q-item-section>
                 </q-item>
-                <q-item clickable v-close-popup @click="$emit('ShowEditTree','add')">
+                <q-item clickable v-close-popup @click="$emit('ShowEditTree','add node')">
                    <q-item-section>Добавить подчиненное подрзделение </q-item-section>
                 </q-item>
               </q-list>
