@@ -7,10 +7,10 @@
         <q-list dense style="min-width: 100px">
 
            <q-item v-show="readyToDelete" clickable v-close-popup >
-            <q-item-section @click="DeleteNode" > Подтвердить удаление</q-item-section>
+            <q-item-section @click="$emit('Delete', group_id)"> Подтвердить удаление</q-item-section>
           </q-item>
           <q-item  v-show="!readyToDelete" clickable  v-close-popup  @click="OpenMenu" >
-            <q-item-section  @click="ReadyToDeleteNode"  >Удалить</q-item-section>
+            <q-item-section  @click="$emit('ReadyDelete')"  >Удалить</q-item-section>
           </q-item>
 
 
@@ -50,9 +50,6 @@
 <script>
 
 
-
-import axios from "axios";
-
 import modal_menu from "@/components/modal_menu";
 
 export default {
@@ -68,16 +65,14 @@ export default {
     showModal() {
       this.modalVisible = true;
     },
-       ReadyToDeleteNode() {
-       this.$emit('clickToDelete')
 
-},
-       DeleteNode() {
-       axios.get('api/delete', {params: {groupId: this.group_id}})
+
+
+
 
 }
   }
-}
+
 </script>
 
 <style scoped>
