@@ -7,7 +7,7 @@
         <q-list dense style="min-width: 100px">
 
            <q-item v-show="readyToDelete" clickable v-close-popup >
-            <q-item-section @click="$emit('Delete', group_id)"> Подтвердить удаление</q-item-section>
+            <q-item-section @click="$emit('Delete')"> Подтвердить удаление</q-item-section>
           </q-item>
           <q-item  v-show="!readyToDelete" clickable  v-close-popup  @click="OpenMenu" >
             <q-item-section  @click="$emit('ReadyDelete')"  >Удалить</q-item-section>
@@ -24,10 +24,10 @@
 
             <q-menu anchor="top end" self="top start">
               <q-list>
-                <q-item clickable v-close-popup @click="$emit('ShowModal','edit group', group_id)">
+                <q-item clickable v-close-popup @click="$emit('ShowEditTree','edit group')">
                    <q-item-section>Изменить данные </q-item-section>
                 </q-item>
-                <q-item clickable v-close-popup @click="$emit('ShowModal','add group', group_id)">
+                <q-item clickable v-close-popup @click="$emit('ShowEditTree','add group')">
                    <q-item-section>Добавить подчиненное подрзделение </q-item-section>
                 </q-item>
               </q-list>
@@ -54,7 +54,7 @@
 
 export default {
   name: "context_menu",
-  props: [ 'group_id', "readyToDelete"],
+  props: [ 'group', "readyToDelete"],
 
 
 

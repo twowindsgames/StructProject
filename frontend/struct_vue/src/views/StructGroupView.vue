@@ -4,15 +4,14 @@
         <div v-for="group in groups" v-bind:key="group.id" >
             <recursive_tree
                 @Delete="OnDelete"
-                @ShowModal="OnShowModal"
-                :slug="group.slug"
-                :children="group.children"
+                @ShowEditTree="OnShowEditTree"
+                :group="group"
                 :depth="0"
-                :group-id="group.id"
-                :get_absolute_url="group.get_absolute_url"
                  >
             </recursive_tree>
         </div>
+
+
 
 
 
@@ -27,7 +26,7 @@
 
 import axios from 'axios'
 import recursive_tree from '../components/recursive_tree.vue'
-import modal_menu from '../components/modal_menu.vue'
+
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -48,7 +47,7 @@ export default defineComponent({
   },
   components:{
     recursive_tree,
-    modal_menu,
+
 
   },
   methods: {
@@ -68,8 +67,8 @@ export default defineComponent({
     OnDelete(id){
      axios.get('api/delete', {params: {groupId: id}})
     },
-    OnShowModal(mode,id) {
-     axios.get('OnShowModal'+mode, {params: {groupId: id}})
+    OnShowEditTree(mode,group) {
+     axios.get('OnShowModal'+group.slug, {params: {groupId: group.id}})
     },
   }
 })

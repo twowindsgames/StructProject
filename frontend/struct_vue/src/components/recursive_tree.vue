@@ -3,8 +3,8 @@
 
     <div :style="indent"  @click="toggleChildren">
 
-      <router-link :to="'/structure' + get_absolute_url" class="button is-dark">{{ slug }}
-        <context_menu @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowModal="OnShowModal" :group_id="groupId" :readyToDelete="checkToDelete()"></context_menu>
+      <router-link :to="'/structure' + group.get_absolute_url" class="button is-dark">{{ group.slug }}
+        <context_menu @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowEditTree="OnShowEditTree" :group="group" :readyToDelete="checkToDelete()"></context_menu>
       </router-link>
 
       <div v-if="checkToDelete()"> toDelete </div>
@@ -12,16 +12,14 @@
 
    <div v-if="isShow">
       <recursive_tree
-      v-for="group in children"
+      v-for="group in group.children"
       v-bind:key="group.id"
         @Delete="OnDelete"
-        @ShowModal="OnShowModal"
-        :slug="group.slug"
-        :children="group.children"
+        @ShowEditTree="OnShowEditTree"
+        :group="group"
         :depth="depth + 1"
-        :group-id = "group.id"
-        :get_absolute_url = "group.get_absolute_url"
-        :isParentReadyToDelete="checkToDelete()">
+        :isParentReadyToDelete="checkToDelete()"
+        :root="rootListener">
       </recursive_tree>
    </div>
 
@@ -31,14 +29,25 @@
   import context_menu from './context_menu.vue'
 
   export default {
-    props: [ 'slug', 'children', 'depth', 'groupId', 'get_absolute_url', 'clickToDelete', 'isParentReadyToDelete' ],
+    props: ['group',  'depth', 'clickToDelete', 'isParentReadyToDelete', 'root' ],
     name: 'recursive_tree',
     data() {
       return {
         isShow: false,
-        isReadyToDelete: false
+        isReadyToDelete: false,
+        rootListener: null,
+
+    }
+    },
+    mounted() {
+      if (this.root == null){
+        this.rootListener = this
+      }
+      else {
+         this.rootListener = this.root
       }
     },
+
     computed: {
       indent() {
         return { transform: `translate(${this.depth * 50}px)` }
@@ -55,11 +64,11 @@
     onReadyDelete() {
       this.isReadyToDelete = true
     },
-    OnDelete(id) {
-       this.$emit('Delete', id)
+    OnDelete() {
+       this.rootListener.$emit('Delete', this.group.id)
     },
-    OnShowModal(mode,id) {
-       this.$emit('ShowModal', mode,id)
+    OnShowEditTree(mode) {
+       this.rootListener.$emit('ShowEditTree', mode, this.group)
     },
 
     checkToDelete(){
