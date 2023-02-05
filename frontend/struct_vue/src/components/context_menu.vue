@@ -24,10 +24,10 @@
 
             <q-menu anchor="top end" self="top start">
               <q-list>
-                <q-item clickable v-close-popup @click="showModal">
+                <q-item clickable v-close-popup @click="$emit('ShowModal','edit group', group_id)">
                    <q-item-section>Изменить данные </q-item-section>
                 </q-item>
-                <q-item clickable v-close-popup>
+                <q-item clickable v-close-popup @click="$emit('ShowModal','add group', group_id)">
                    <q-item-section>Добавить подчиненное подрзделение </q-item-section>
                 </q-item>
               </q-list>
@@ -43,22 +43,19 @@
       </q-menu>
 
 
-  <modal_menu v-model="modalVisible" ></modal_menu>
+
 
 </template>
 
 <script>
 
 
-import modal_menu from "@/components/modal_menu";
+
 
 export default {
   name: "context_menu",
-  components: {modal_menu},
   props: [ 'group_id', "readyToDelete"],
-  data(){
-   return { modalVisible : false}
-  },
+
 
 
   methods: {

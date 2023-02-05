@@ -4,7 +4,7 @@
     <div :style="indent"  @click="toggleChildren">
 
       <router-link :to="'/structure' + get_absolute_url" class="button is-dark">{{ slug }}
-        <context_menu @ReadyDelete="onReadyDelete()" @Delete="OnDelete" :group_id="groupId" :readyToDelete="checkToDelete()"></context_menu>
+        <context_menu @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowModal="OnShowModal" :group_id="groupId" :readyToDelete="checkToDelete()"></context_menu>
       </router-link>
 
       <div v-if="checkToDelete()"> toDelete </div>
@@ -15,6 +15,7 @@
       v-for="group in children"
       v-bind:key="group.id"
         @Delete="OnDelete"
+        @ShowModal="OnShowModal"
         :slug="group.slug"
         :children="group.children"
         :depth="depth + 1"
@@ -54,9 +55,11 @@
     onReadyDelete() {
       this.isReadyToDelete = true
     },
-        OnDelete(id) {
-        this.$emit('Delete', id)
-
+    OnDelete(id) {
+       this.$emit('Delete', id)
+    },
+    OnShowModal(mode,id) {
+       this.$emit('ShowModal', mode,id)
     },
 
     checkToDelete(){
