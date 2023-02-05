@@ -15,7 +15,7 @@
 </div>
 
     <modal_menu v-model="editUnitModalView" :title="editOptions.title">
-      <post_form @DataPost="OnDataPost" :current_data="editOptions.unit" :mode="editOptions.mode" :group_id="editOptions.group_id" >
+      <post_form @DataPost="OnDataPost" :current_data="editOptions.unit" :mode="editOptions.mode" :group_id="group.id" >
       </post_form>
     </modal_menu>
 
@@ -61,7 +61,7 @@ export default {
       group: {},
       units: [],
       isLoadUnits:false,
-      editOptions: {mode: 'режим', title: 'заголовок', unit: null , group_id: null},
+      editOptions: {mode: 'режим', title: 'заголовок', unit: null },
       editUnitModalView: false
     }
   },
@@ -100,22 +100,32 @@ export default {
 
   },
     OnDelete(id){
-     axios.get('api/delete', {params: {groupId: id}})
+     axios.delete('/api/units', {params: {id: id}}).then(response => {
+        this.getGroupUnits(this.group.id)
+              console.log(response)})
+                .catch(error => {console.log(error)})
     },
 
      OnShowUnitEdit(mode,unit) {
 
     this.editOptions.mode = mode
     this.editOptions.unit = unit
-    if (unit!==null)this.editOptions.group_id = unit.group.id
+
     if (mode==="edit unit")  this.editOptions.title = "Изменить информацию о сотруднике"
     else  this.editOptions.title = "Добавить сотрудника"
     this.editUnitModalView=true
 
     },
-      OnDataPost(post_data){
-     axios.get('api/postaddunit', {params: {data: post_data.employeeName}})
-     if (this.modalOptions.mode==="edit unit")  axios.get('api/posteditunit', {params: {data: post_data.employeeName}})
+
+     OnDataPost(post_data){
+     let request
+     if (this.editOptions.mode==="add unit")request=axios.post('api/units', post_data)
+     if (this.editOptions.mode==="edit unit")request= axios.put('api/units', post_data)
+       request.then(response => {
+          this.getGroupUnits(this.group.id)
+              console.log(response)})
+                .catch(error => {console.log(error)})
+
     },
 },
 

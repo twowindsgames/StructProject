@@ -4,19 +4,21 @@ from .models import Group, Unit
 
 
 class GroupSerializer(serializers.ModelSerializer):
-    children = RecursiveField(many=True)
+    children = RecursiveField(many=True,)
 
     class Meta:
         model = Group
         fields = (
             "id",
             "title",
+            "full_title",
             "slug",
             "parent",
             "get_absolute_url",
             "is_leaf_node",
             "children",
         )
+        extra_kwargs = {'children': {'required': False}}
 
 
 class GroupDetailSerializer(serializers.ModelSerializer):
@@ -25,11 +27,14 @@ class GroupDetailSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "title",
+            "full_title",
             "slug",
             "parent",
             "get_absolute_url",
             "children",
+
         )
+        extra_kwargs = {'children': {'required': False, }}
 
 
 class UnitSerializer(serializers.ModelSerializer):
@@ -37,7 +42,6 @@ class UnitSerializer(serializers.ModelSerializer):
         model = Unit
         fields = (
             "id",
-            "slug",
             "group",
             "employeeName",
             "employeePost",

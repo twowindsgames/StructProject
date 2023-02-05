@@ -1,15 +1,22 @@
 from django.db import models
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
+from autoslug import AutoSlugField
 
 
 # Create your models here.
+
+
+
 class Group(MPTTModel):
     title = models.CharField(max_length=20, verbose_name='Краткое наименование')
     full_title = models.CharField(max_length=100, verbose_name='Полное наименование')
-    parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name='Вышестоящее подразделение')
     slug = models.SlugField()
+
+
+
 
 
     class MPTTMeta:
@@ -36,7 +43,7 @@ class Unit(models.Model):
     employeeName = models.CharField(max_length=50, verbose_name='ФИО сотрудника')
     employeePost = models.CharField(max_length=50, verbose_name='Должность')
     dateOfJoining = models.DateField()
-    slug = models.SlugField(max_length=150)
+    slug = models.SlugField(max_length=150, null=True)
     group = TreeForeignKey('Group', on_delete=models.CASCADE, related_name='units', verbose_name='Подразделение')
 
     class Meta:

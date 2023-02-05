@@ -11,7 +11,7 @@
             </recursive_tree>
         </div>
 <modal_menu v-model="editTreeModalView" :title="modalOptions.title">
-  <post_form @DataPost="OnDataPost" :mode="modalOptions.mode" :current_data="null" ></post_form>
+  <post_form @DataPost="OnDataPost" :mode="modalOptions.mode" :current_data=modalOptions.group ></post_form>
 </modal_menu>
   </div>
  <router-view />
@@ -34,7 +34,7 @@ export default defineComponent({
   data() {
     return {
       groups: [],
-      modalOptions: {mode: 'режим', title: 'заголовок', group: null},
+      modalOptions: {mode: 'режим', title: 'заголовок', group: Object},
       editTreeModalView: false
 
 
@@ -64,12 +64,22 @@ export default defineComponent({
           })
     },
     OnDelete(id){
-     axios.get('api/delete', {params: {groupId: id}})
+     axios.delete('api/group/', {params: {groupId: id},}).then(response => {
+        this.getLatestProducts()
+              console.log(response)})
+                .catch(error => {console.log(error)})
     },
     OnDataPost(post_data){
-     if (this.modalOptions.mode==="add node")  axios.get('api/postadd', {params: {data: post_data.title}})
-     if (this.modalOptions.mode==="edit node")  axios.get('api/postedit', {params: {data: post_data.title}})
+
+     let request
+     if (this.modalOptions.mode==="add node")  request = axios.post('api/group/', post_data)
+     if (this.modalOptions.mode==="edit node") request = axios.put('api/group/', post_data)
+     request.then(response => {
+        this.getLatestProducts()
+              console.log(response)})
+                .catch(error => {console.log(error)})
     },
+
     OnShowEditTree(mode,group) {
     this.modalOptions.mode = mode
     this.modalOptions.group = group
