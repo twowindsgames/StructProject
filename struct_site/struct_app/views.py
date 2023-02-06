@@ -1,3 +1,4 @@
+from django.core.files.storage import default_storage
 from django.shortcuts import render
 
 # Create your views here.
@@ -37,8 +38,9 @@ class GroupDetailView(APIView):
         serializer = GroupDetailSerializer(group)
         return Response(serializer.data)
     def post(self, request, tree_hierarchy):
+
         query = JSONParser().parse(request)
-        print(query)
+
         query['slug'] = slugify(query['title'])
         serialize_data = GroupDetailSerializer(data=query)
         if serialize_data.is_valid():
@@ -76,6 +78,8 @@ class UnitsListView(APIView):
 
     def post(self, request):
         query = request.data
+        file = request.FILES['image']
+        file_name = default_storage.save(file.name, file)
 
         serialize_data = UnitSerializer(data=query)
         if serialize_data.is_valid():

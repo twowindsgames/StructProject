@@ -51,4 +51,5 @@ class UnitSerializer(serializers.ModelSerializer):
             "birthdayDate",
             "get_age",
             "get_image",
+            "image",
         )

@@ -117,10 +117,9 @@ export default {
 
      OnDataPost(post_data){
      let request
-     let formData = new FormData();
-     formData.append('file', post_data.image);
-     if (this.editOptions.mode==="add unit")request=axios.post('api/units', formData,{headers: {"Content-Type": "multipart/form-data"})
-     if (this.editOptions.mode==="edit unit")request= axios.put('api/units', formData,{headers: {"Content-Type": "multipart/form-data"})
+
+     if (this.editOptions.mode==="add unit")request=axios.post('api/units', post_data,{headers: {"Content-Type": "multipart/form-data"}})
+     if (this.editOptions.mode==="edit unit")request= axios.put('api/units', post_data,{headers: {"Content-Type": "multipart/form-data"}})
        request.then(response => {
           this.getGroupUnits(this.group.id)
               console.log(response)})
