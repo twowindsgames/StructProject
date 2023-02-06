@@ -5,33 +5,20 @@
 
 
 
-<!-- please make all buttons orange, including this one!
-  <q-bar  expand  align="right" position="top"   class="bg-blue-grey-5 text-white ">
-        Подразделение: {{ group.full_title }}({{ group.title }})
-        Сотрудников: {{statistic['unitsCount']}}
-        Средний возраст: {{statistic['averAge']}} г.
-        Средний стаж: {{statistic['averExp']}} г.
-    <q-page-sticky  expand  align="right" position="top-right"   >
-        <q-btn  @click="OnShowUnitEdit('add unit',null)" round color="green" icon="add" ></q-btn>
-    </q-page-sticky>
-  </q-bar>
-  -->
-<q-item  >
-    <div class="row  text-white text-center"  >
 
-      <div class="col-10 col-up bg-indigo-4">
+    <div class="row row-up text-white"  >
+      <div class="col-10 col-up bg-indigo-4 text-center">
         <p class="text-h3 text-weight-bold">{{ group.full_title }}</p>
-        <p class="text-weight-thin">({{ group.title }})</p>
+        <p class="text-weight-thin">{{ group.title }}</p>
+      </div>
+      <div class="col col-up bg-indigo-3 text-italic	">
+        <p>Сотрудников: {{statistic['unitsCount']}} ч.</p>
+        <p>Средний возраст: {{statistic['averAge']}} г.</p>
+        <p>Средний стаж: {{statistic['averExp']}} г.</p>
       </div>
 
-      <div class="col col-up bg-indigo-3 text-italic	text-center">
-      <p>Сотрудников: {{statistic['unitsCount']}} ч.</p>
-      <p>Средний возраст: {{statistic['averAge']}} г.</p>
-      <p>Средний стаж: {{statistic['averExp']}} г.</p>
-      </div>
 
     </div>
-</q-item>
 
 
  <div class="q-pa-md row items-start q-gutter-md" style="margin-top: 5px">
@@ -44,15 +31,6 @@
       <post_form @DataPost="OnDataPost" :current_data="editOptions.unit" :mode="editOptions.mode" :group_id="group.id" >
       </post_form>
     </modal_menu>
-
-
-
-
-
-
-
-
-
 
   </div>
  <router-view />
@@ -79,6 +57,7 @@ export default {
     return {
       group: {},
       units: [],
+
       editOptions: {mode: 'режим', title: 'заголовок', unit: null },
       editUnitModalView: false,
       statistic: ''
@@ -158,11 +137,11 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.my-card
-  width: 100%
+.row-up
+  height: 95px
 .col-up
   border: 1px solid rgba(138, 139, 185, 0.79)
 .col-up p
-  margin: 2px 5px
+  margin: 5px 5px
 </style>
 

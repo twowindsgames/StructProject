@@ -1,35 +1,43 @@
 <template>
   <div class="recursive_tree" >
 
-
-<div v-if="checkToDelete()"> toDelete </div>
-
-
-
-
-
-
-
-
-
-
-   <q-expansion-item :to="'/structure' + group.get_absolute_url" :label="group.slug"  :hide-expand-icon="group.is_leaf_node"  @click="toggleChildren">
-      <context_menu
+    <context_menu
             @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
             :group="group"
             :readyToDelete="checkToDelete()">
-      </context_menu>
+        </context_menu>
+
+    <q-item class="struct-item" clickable  :to="'/structure' + group.get_absolute_url"
+                      :style="indent"
+
+                      :hide-expand-icon="group.is_leaf_node">
+          {{group.slug}}
+          <div v-if="checkToDelete()"> toDelete </div>
+
+    <div name="arrow"   v-if="!group.is_leaf_node">
+
+           <q-icon v-if="isShow" name="arrow_drop_down" @click="toggleChildren">  </q-icon>
+           <q-icon v-else name="arrow_right" @click="toggleChildren">  </q-icon>
+
+          </div>
+
+      </q-item>
+
+
+
+
+    <div v-if="isShow" transition-show="fade"  >
       <recursive_tree
-      v-for="g in group.children"
-      v-bind:key="g.id"
+      v-for="group in group.children"
+      v-bind:key="group.id"
         @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
-        :group="g"
+        :group="group"
         :depth="depth + 1"
         :isParentReadyToDelete="checkToDelete()"
         :root="rootListener">
-
       </recursive_tree>
-   </q-expansion-item>
+   </div>
+
 
 
   </div>
@@ -59,7 +67,7 @@
 
     computed: {
       indent() {
-        return { transform: `translate(${this.depth * 10}px)` }
+        return { transform: `translate(${this.depth * 8}%)` }
       }
     },
     components:{
@@ -87,3 +95,7 @@
  },
   }
 </script>
+<style lang="sass" scoped>
+.struct-item
+  margin: 0px 0px
+</style>

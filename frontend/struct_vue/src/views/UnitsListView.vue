@@ -61,4 +61,7 @@ export default {
 
 }
 </script>
-
+<style lang="sass" scoped>
+.struct-item
+  margin: 2px 5px
+</style>
