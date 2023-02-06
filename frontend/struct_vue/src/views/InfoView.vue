@@ -18,8 +18,11 @@
       </div>
 
 
-    </div>
 
+    </div>
+    <q-page-sticky   position="right" style="margin-right: 50px" >
+        <q-btn  @click="OnShowUnitEdit('add unit',null)" round color="green" icon="add" ></q-btn>
+    </q-page-sticky>
 
  <div class="q-pa-md row items-start q-gutter-md" style="margin-top: 5px">
      <q-intersection class="my-card" v-for="unit in units" v-bind:key="unit.id" transition="fade">
@@ -42,7 +45,7 @@
 <script>
 
 import axios from 'axios'
-import unit_list from "@/components/unit_list";
+import unit_list from "@/components/unit_list.vue";
 import modal_menu from '../components/modal_menu.vue'
 import post_form from '../components/post_form.vue'
 

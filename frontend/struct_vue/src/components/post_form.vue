@@ -9,9 +9,36 @@
        <div v-else>
       <q-input  class="post-item"  outlined v-model="post_data_unit.employeeName"  placeholder="Иванов Иван Иванович" hint="ФИО сотрудника"  />
       <q-input  class="post-item"  outlined v-model="post_data_unit.employeePost" placeholder="инженер" hint="Должность сотрудника"  />
-      <q-input  class="post-item"  outlined v-model="post_data_unit.dateOfJoining" placeholder="23.07.2010" hint="Дата начала работы в подразделении"  />
-      <q-input  class="post-item"  outlined v-model="post_data_unit.birthdayDate" placeholder="23.07.2000" hint="Дата рождения"  />
-      </div>
+      <q-input  class="post-item"  outlined v-model="post_data_unit.birthdayDate" placeholder="23.07.2000" hint="Дата рождения"  >
+        <template v-slot:prepend>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+              <q-date v-model="post_data_unit.birthdayDate" mask="YYYY-MM-DD">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+    </q-input>
+
+          <q-input  class="post-item"  outlined v-model="post_data_unit.dateOfJoining" placeholder="23.07.2000" hint="Дата рождения"  >
+        <template v-slot:prepend>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+              <q-date v-model="post_data_unit.dateOfJoining" mask="YYYY-MM-DD">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+    </q-input>
+
+
+       </div>
 
       <div>
         <q-btn label="Применить"  color="primary" @click="PostData" v-close-popup/>
@@ -25,7 +52,7 @@
 </template>
 
 <script>
-
+import date_input from "@/components/date_input";
 
 export default {
   props: ['mode','current_data', 'group_id'],
@@ -49,6 +76,9 @@ export default {
 
 
     }
+  },
+  components(){
+    date_input
   },
   mounted() {
     if(this.mode==='edit node') {
