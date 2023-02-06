@@ -1,15 +1,21 @@
 <template>
-<q-card >
-      <q-card-section  class="bg-indigo-2 text-black rounded-borders" >
-        <div class="text-h6">{{unit.employeeName}}</div>
-        <div class="text-subtitle2">{{unit.employeePost}}</div>
-        <div class="text-hide">{{unit.dateOfJoining}}</div>
-         <q-card-actions align="right">
-          <q-btn flat @click="$emit('ShowUnitEdit', 'edit unit', unit)">edit</q-btn>
-          <q-btn flat @click="$emit('Delete', unit.id)">del</q-btn>
-        </q-card-actions>
-      </q-card-section>
-</q-card>
+     <q-card  class="row unit-card bg-indigo-2 text-black rounded-borders" >
+      <div class="col-3 unit  text-center">
+         <q-img :src=unit.get_image style="height: 200px; width: 200px"/>
+      </div>
+       <q-list class="col-8 dense bordered padding unit">
+        <q-item class="text-h4 text-center">{{unit.employeeName}} </q-item>
+        <q-separator></q-separator>
+        <q-item class="text-subtitle1">Должность: {{unit.employeePost}}</q-item>
+        <q-item class="text-subtitle1">Дата начала работы: {{unit.dateOfJoining}}</q-item>
+        <q-item class="text-subtitle1">Дата рождения: {{unit.dateOfJoining}}</q-item>
+      </q-list>
+      <q-card-actions  class=" col-xs-1 unit" >
+       <q-btn flat icon="edit" style="margin: auto" size="1.5em" @click="$emit('ShowUnitEdit', 'edit unit', unit)"></q-btn>
+       <q-btn flat icon="delete" style="margin: auto" size="1.5em" @click="$emit('Delete', unit.id)"></q-btn>
+      </q-card-actions>
+    </q-card>
+
 
 
 </template>
@@ -67,4 +73,7 @@
 .my-card
   width: 100%
   align-content: center
+.unit
+  border: 1px solid rgba(221, 218, 255, 0.66)
+
 </style>

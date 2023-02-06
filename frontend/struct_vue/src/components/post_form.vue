@@ -27,7 +27,7 @@
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="post_data_unit.dateOfJoining" mask="YYYY-MM-DD">
+              <q-date v-model="post_data_unit.image" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="primary" flat />
                 </div>
@@ -36,6 +36,13 @@
           </q-icon>
         </template>
     </q-input>
+
+         <q-file
+      v-model="post_data_unit.image"
+      label="Pick one file"
+      filled
+      style="max-width: 300px"
+    />
 
 
        </div>
@@ -72,6 +79,7 @@ export default {
            birthdayDate: '',
            group: '',
            id:'',
+           image:'',
       },
 
 
@@ -94,6 +102,7 @@ export default {
       this.post_data_unit.birthdayDate= this.current_data.birthdayDate
       this.post_data_unit.group= this.current_data.group
       this.post_data_unit.id= this.current_data.id
+
     }
   },
 

@@ -2,6 +2,10 @@ from django.urls import path, re_path, include
 from .views import *
 
 
+
+
+from django.urls import path, include
+
 urlpatterns = [
     path('group/all/', GroupListView.as_view()),
 

@@ -14,20 +14,20 @@
 
 
     </div>
-    <q-page-sticky   position="right" style="margin-right: 50px" >
-        <q-btn  @click="OnShowUnitEdit('add unit',null)" round color="green" icon="add" ></q-btn>
-    </q-page-sticky>
 
- <div class="q-pa-md unit-list  q-gutter-md justify-center" >
+
+ <div class=" unit-list  q-gutter-md justify-center" >
      <q-intersection  v-for="unit in units" v-bind:key="unit.id" transition="fade">
      <unit_list  @Delete="OnDelete" @ShowUnitEdit="OnShowUnitEdit" :unit="unit"> </unit_list>
-    </q-intersection>
+     </q-intersection>
 </div>
-
-    <modal_menu v-model="editUnitModalView" :title="editOptions.title">
+<q-page-sticky   position="right" style="margin-right: 30px" >
+        <q-btn  @click="OnShowUnitEdit('add unit',null)" round color="green" icon="add" ></q-btn>
+</q-page-sticky>
+<modal_menu v-model="editUnitModalView" :title="editOptions.title">
       <post_form @DataPost="OnDataPost" :current_data="editOptions.unit" :mode="editOptions.mode" :group_id="group.id" >
       </post_form>
-    </modal_menu>
+ </modal_menu>
 
   </div>
  <router-view />
@@ -117,14 +117,19 @@ export default {
 
      OnDataPost(post_data){
      let request
-     if (this.editOptions.mode==="add unit")request=axios.post('api/units', post_data)
-     if (this.editOptions.mode==="edit unit")request= axios.put('api/units', post_data)
+     let formData = new FormData();
+     formData.append('file', post_data.image);
+     if (this.editOptions.mode==="add unit")request=axios.post('api/units', formData,{headers: {"Content-Type": "multipart/form-data"})
+     if (this.editOptions.mode==="edit unit")request= axios.put('api/units', formData,{headers: {"Content-Type": "multipart/form-data"})
        request.then(response => {
           this.getGroupUnits(this.group.id)
               console.log(response)})
                 .catch(error => {console.log(error)})
 
     },
+
+
+
 },
 
 

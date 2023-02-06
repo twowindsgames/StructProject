@@ -5,6 +5,7 @@ from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from autoslug import AutoSlugField
 from datetime import date, datetime
+from PIL import Image
 
 
 
@@ -58,10 +59,16 @@ class Unit(models.Model):
     birthdayDate = models.DateField(auto_now=False, null=True, blank=True)
     slug = models.SlugField(max_length=150, null=True)
     group = TreeForeignKey('Group', on_delete=models.CASCADE, related_name='units', verbose_name='Подразделение')
+    image = models.ImageField(upload_to='', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
+
+    def get_image(self):
+        if self.image:
+            return 'http://127.0.0.1:8000' + self.image.url
+        return ''
 
     def get_age(self):
         today = date.today()
