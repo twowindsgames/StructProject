@@ -1,14 +1,11 @@
 <template>
   <div class="struct">
-
         <q-list v-for="group in groups" v-bind:key="group.id" >
-
             <recursive_tree
                 @Delete="OnDelete"
                 @ShowEditTree="OnShowEditTree"
                 :group="group"
-                :depth="0"
-                 >
+                :depth="0">
             </recursive_tree>
         </q-list>
 

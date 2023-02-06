@@ -1,11 +1,5 @@
 <template>
   <div class="info">
-
-
-
-
-
-
     <div class="row row-up text-white"  >
       <div class="col-10 col-up bg-indigo-4 text-center">
         <p class="text-h3 text-weight-bold">{{ group.full_title }}</p>
@@ -24,9 +18,9 @@
         <q-btn  @click="OnShowUnitEdit('add unit',null)" round color="green" icon="add" ></q-btn>
     </q-page-sticky>
 
- <div class="q-pa-md row items-start q-gutter-md" style="margin-top: 5px">
-     <q-intersection class="my-card" v-for="unit in units" v-bind:key="unit.id" transition="fade">
-     <unit_list @Delete="OnDelete" @ShowUnitEdit="OnShowUnitEdit" :unit="unit"> </unit_list>
+ <div class="q-pa-md unit-list  q-gutter-md justify-center" >
+     <q-intersection  v-for="unit in units" v-bind:key="unit.id" transition="fade">
+     <unit_list  @Delete="OnDelete" @ShowUnitEdit="OnShowUnitEdit" :unit="unit"> </unit_list>
     </q-intersection>
 </div>
 
@@ -140,6 +134,9 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
+.unit-list
+  width: 90%
+  margin: 0 auto
 .row-up
   height: 95px
 .col-up

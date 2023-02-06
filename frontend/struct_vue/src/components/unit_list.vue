@@ -1,15 +1,15 @@
 <template>
-
-      <q-card-section class="bg-indigo-2 text-black rounded-borders" >
+<q-card >
+      <q-card-section  class="bg-indigo-2 text-black rounded-borders" >
         <div class="text-h6">{{unit.employeeName}}</div>
         <div class="text-subtitle2">{{unit.employeePost}}</div>
         <div class="text-hide">{{unit.dateOfJoining}}</div>
-       <q-card-actions align="right">
-        <q-btn flat @click="$emit('ShowUnitEdit', 'edit unit', unit)">edit</q-btn>
-        <q-btn flat @click="$emit('Delete', unit.id)">del</q-btn>
-      </q-card-actions>
+         <q-card-actions align="right">
+          <q-btn flat @click="$emit('ShowUnitEdit', 'edit unit', unit)">edit</q-btn>
+          <q-btn flat @click="$emit('Delete', unit.id)">del</q-btn>
+        </q-card-actions>
       </q-card-section>
-
+</q-card>
 
 
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="recursive_tree" >
+  <div  >
 
     <context_menu
             @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
@@ -7,18 +7,17 @@
             :readyToDelete="checkToDelete()">
         </context_menu>
 
-    <q-item class="struct-item" clickable  :to="'/structure' + group.get_absolute_url"
+    <q-item :class="[checkToDelete() ? 'bg-red-2' :  'bg-yellow-2']"
+          clickable  :to="'/structure' + group.get_absolute_url"
                       :style="indent"
 
                       :hide-expand-icon="group.is_leaf_node">
-          {{group.slug}}
-          <div v-if="checkToDelete()"> toDelete </div>
+          <p > {{group.slug}}</p>
+          <div v-if="checkToDelete()">(подтвердите)</div>
 
-    <div name="arrow"   v-if="!group.is_leaf_node">
-
-           <q-icon v-if="isShow" name="arrow_drop_down" @click="toggleChildren">  </q-icon>
-           <q-icon v-else name="arrow_right" @click="toggleChildren">  </q-icon>
-
+          <div name="arrow"   v-if="!group.is_leaf_node">
+           <q-icon v-if="isShow" name="arrow_drop_down"  size="2em" @click="toggleChildren">  </q-icon>
+           <q-icon v-else name="arrow_right" size="2em" @click="toggleChildren">  </q-icon>
           </div>
 
       </q-item>
@@ -96,6 +95,6 @@
   }
 </script>
 <style lang="sass" scoped>
-.struct-item
-  margin: 0px 0px
+.title
+  margin: auto 0px
 </style>
