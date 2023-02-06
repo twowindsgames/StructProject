@@ -21,9 +21,10 @@
 
      <q-page-sticky  expand  align="right" position="top"   class="bg-blue-grey-5 text-white ">
        <div >
-        Подразделение: {{ group.full_title }}
-        ({{ group.title }})
-
+        Подразделение: {{ group.full_title }}({{ group.title }})
+        Сотрудников: {{statistic['unitsCount']}}
+        Средний возраст: {{statistic['averAge']}} г.
+        Средний стаж: {{statistic['averExp']}} г.
 
       </div>
 
@@ -53,8 +54,8 @@ import post_form from '../components/post_form.vue'
 
 export default {
   name: 'GroupInfo',
-  components: {unit_list,
-  modal_menu, post_form
+  components: {
+  unit_list, modal_menu, post_form
   },
   data() {
     return {
@@ -62,7 +63,8 @@ export default {
       units: [],
       isLoadUnits:false,
       editOptions: {mode: 'режим', title: 'заголовок', unit: null },
-      editUnitModalView: false
+      editUnitModalView: false,
+      statistic: ''
     }
   },
    mounted() {
@@ -80,11 +82,14 @@ export default {
           .get(`/api/group/${tree_hierarchy}`)
           .then(response => {
            this.group = response.data
+           this.statistic = response.data.get_group_stat
            this.getGroupUnits(this.group.id)
+
           })
           .catch(error => {
             console.log(error)
           })
+
 
     },
     getGroupUnits(groupId) {

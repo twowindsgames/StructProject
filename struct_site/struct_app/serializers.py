@@ -31,6 +31,7 @@ class GroupDetailSerializer(serializers.ModelSerializer):
             "slug",
             "parent",
             "get_absolute_url",
+            "get_group_stat",
             "children",
 
         )
@@ -46,4 +47,6 @@ class UnitSerializer(serializers.ModelSerializer):
             "employeeName",
             "employeePost",
             "dateOfJoining",
+            "birthdayDate",
+            "get_age",
         )

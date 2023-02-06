@@ -10,6 +10,7 @@
       <q-input  class="post-item"  outlined v-model="post_data_unit.employeeName"  placeholder="Иванов Иван Иванович" hint="ФИО сотрудника"  />
       <q-input  class="post-item"  outlined v-model="post_data_unit.employeePost" placeholder="инженер" hint="Должность сотрудника"  />
       <q-input  class="post-item"  outlined v-model="post_data_unit.dateOfJoining" placeholder="23.07.2010" hint="Дата начала работы в подразделении"  />
+      <q-input  class="post-item"  outlined v-model="post_data_unit.birthdayDate" placeholder="23.07.2000" hint="Дата рождения"  />
       </div>
 
       <div>
@@ -41,6 +42,7 @@ export default {
            employeeName: '',
            employeePost: '',
            dateOfJoining: '',
+           birthdayDate: '',
            group: '',
            id:'',
       },
@@ -59,6 +61,7 @@ export default {
       this.post_data_unit.employeeName= this.current_data.employeeName
       this.post_data_unit.employeePost= this.current_data.employeePost
       this.post_data_unit.dateOfJoining= this.current_data.dateOfJoining
+      this.post_data_unit.birthdayDate= this.current_data.birthdayDate
       this.post_data_unit.group= this.current_data.group
       this.post_data_unit.id= this.current_data.id
     }
