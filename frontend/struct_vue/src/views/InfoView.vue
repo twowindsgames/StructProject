@@ -4,8 +4,34 @@
 
 
 
-    <div v-if=isLoadUnits>...</div>
 
+<!-- please make all buttons orange, including this one!
+  <q-bar  expand  align="right" position="top"   class="bg-blue-grey-5 text-white ">
+        Подразделение: {{ group.full_title }}({{ group.title }})
+        Сотрудников: {{statistic['unitsCount']}}
+        Средний возраст: {{statistic['averAge']}} г.
+        Средний стаж: {{statistic['averExp']}} г.
+    <q-page-sticky  expand  align="right" position="top-right"   >
+        <q-btn  @click="OnShowUnitEdit('add unit',null)" round color="green" icon="add" ></q-btn>
+    </q-page-sticky>
+  </q-bar>
+  -->
+<q-item  >
+    <div class="row  text-white text-center"  >
+
+      <div class="col-10 col-up bg-indigo-4">
+        <p class="text-h3 text-weight-bold">{{ group.full_title }}</p>
+        <p class="text-weight-thin">({{ group.title }})</p>
+      </div>
+
+      <div class="col col-up bg-indigo-3 text-italic	text-center">
+      <p>Сотрудников: {{statistic['unitsCount']}} ч.</p>
+      <p>Средний возраст: {{statistic['averAge']}} г.</p>
+      <p>Средний стаж: {{statistic['averExp']}} г.</p>
+      </div>
+
+    </div>
+</q-item>
 
 
  <div class="q-pa-md row items-start q-gutter-md" style="margin-top: 5px">
@@ -19,21 +45,13 @@
       </post_form>
     </modal_menu>
 
-     <q-page-sticky  expand  align="right" position="top"   class="bg-blue-grey-5 text-white ">
-       <div >
-        Подразделение: {{ group.full_title }}({{ group.title }})
-        Сотрудников: {{statistic['unitsCount']}}
-        Средний возраст: {{statistic['averAge']}} г.
-        Средний стаж: {{statistic['averExp']}} г.
-
-      </div>
 
 
 
-    </q-page-sticky>
-     <q-page-sticky  expand  align="right" position="top-right"   >
-        <q-btn  @click="OnShowUnitEdit('add unit',null)" round color="green" icon="add" ></q-btn>
-    </q-page-sticky>
+
+
+
+
 
 
   </div>
@@ -61,14 +79,13 @@ export default {
     return {
       group: {},
       units: [],
-      isLoadUnits:false,
       editOptions: {mode: 'режим', title: 'заголовок', unit: null },
       editUnitModalView: false,
       statistic: ''
     }
   },
    mounted() {
-     this.isLoadUnits = true;
+
      this.getGroupDetailInfo()
 
   },
@@ -143,6 +160,9 @@ export default {
 <style lang="sass" scoped>
 .my-card
   width: 100%
-
+.col-up
+  border: 1px solid rgba(138, 139, 185, 0.79)
+.col-up p
+  margin: 2px 5px
 </style>
 

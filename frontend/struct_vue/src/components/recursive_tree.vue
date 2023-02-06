@@ -1,30 +1,36 @@
 <template>
   <div class="recursive_tree" >
 
-    <div :style="indent"  @click="toggleChildren">
 
-      <router-link :to="'/structure' + group.get_absolute_url" class="button is-dark">{{ group.slug }}
-        <context_menu
+<div v-if="checkToDelete()"> toDelete </div>
+
+
+
+
+
+
+
+
+
+
+   <q-expansion-item :to="'/structure' + group.get_absolute_url" :label="group.slug"  :hide-expand-icon="group.is_leaf_node"  @click="toggleChildren">
+      <context_menu
             @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
             :group="group"
             :readyToDelete="checkToDelete()">
-        </context_menu>
-      </router-link>
-
-      <div v-if="checkToDelete()"> toDelete </div>
-    </div>
-
-   <div v-if="isShow">
+      </context_menu>
       <recursive_tree
-      v-for="group in group.children"
-      v-bind:key="group.id"
+      v-for="g in group.children"
+      v-bind:key="g.id"
         @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
-        :group="group"
+        :group="g"
         :depth="depth + 1"
         :isParentReadyToDelete="checkToDelete()"
         :root="rootListener">
+
       </recursive_tree>
-   </div>
+   </q-expansion-item>
+
 
   </div>
 </template>
@@ -53,7 +59,7 @@
 
     computed: {
       indent() {
-        return { transform: `translate(${this.depth * 50}px)` }
+        return { transform: `translate(${this.depth * 10}px)` }
       }
     },
     components:{

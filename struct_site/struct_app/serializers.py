@@ -30,6 +30,7 @@ class GroupDetailSerializer(serializers.ModelSerializer):
             "full_title",
             "slug",
             "parent",
+            "is_leaf_node",
             "get_absolute_url",
             "get_group_stat",
             "children",
