@@ -44,7 +44,6 @@ class UnitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Unit
-
         fields = (
             "id",
             "group",
@@ -61,3 +60,4 @@ class UnitSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         image_url = obj.image.url
         return request.build_absolute_uri(image_url)
+

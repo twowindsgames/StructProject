@@ -98,6 +98,8 @@ export default {
     OnDelete(id){
      axios.delete('/api/units', {params: {id: id}}).then(response => {
         this.getGroupUnits(this.group.id)
+
+          this.getGroupDetailInfo()
               console.log(response)})
                 .catch(error => {console.log(error)})
     },
@@ -120,6 +122,7 @@ export default {
      if (this.editOptions.mode==="edit unit")request= axios.put('api/units', post_data,{headers: {"Content-Type": "multipart/form-data"}})
        request.then(response => {
           this.getGroupUnits(this.group.id)
+          this.getGroupDetailInfo()
               console.log(response)})
                 .catch(error => {console.log(error)})
 

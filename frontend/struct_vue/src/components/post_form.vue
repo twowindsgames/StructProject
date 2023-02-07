@@ -39,9 +39,8 @@
 
          <q-file
       v-model="post_data_unit.image"
-      label="Pick one file"
-
-
+      label="Фото сотрудника (необязательно)"
+      filled
     />
 
 
@@ -79,7 +78,7 @@ export default {
            birthdayDate: '',
            group: '',
            id:'',
-           image:'',
+           image:'default',
       },
 
 
@@ -103,9 +102,8 @@ export default {
       this.post_data_unit.group= this.current_data.group
       this.post_data_unit.id= this.current_data.id
 
-
-
     }
+
   },
 
   methods:{
@@ -117,6 +115,7 @@ export default {
      else {
 
      this.post_data_unit.group = this.group_id
+
      this.$emit('DataPost', this.post_data_unit)
      }
     }

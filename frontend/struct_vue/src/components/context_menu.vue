@@ -9,6 +9,9 @@
            <q-item v-show="readyToDelete" clickable v-close-popup >
             <q-item-section @click="$emit('Delete')"> Подтвердить удаление</q-item-section>
           </q-item>
+          <q-item v-show="readyToDelete" clickable v-close-popup >
+            <q-item-section @click="$emit('ReadyDelete')"> Отменить удаление</q-item-section>
+          </q-item>
           <q-item  v-show="!readyToDelete" clickable  v-close-popup  @click="OpenMenu" >
             <q-item-section  @click="$emit('ReadyDelete')"  >Удалить</q-item-section>
           </q-item>
@@ -54,7 +57,7 @@
 
 export default {
   name: "context_menu",
-  props: [ 'group', "readyToDelete"],
+  props: [ 'group', 'readyToDelete'],
 
 
 

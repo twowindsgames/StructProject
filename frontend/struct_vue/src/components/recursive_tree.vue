@@ -1,7 +1,6 @@
 <template>
-  <div  >
-
-    <context_menu
+  <div>
+       <context_menu
             @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
             :group="group"
             :readyToDelete="checkToDelete()">
@@ -78,7 +77,7 @@
       },
 
     onReadyDelete() {
-      this.isReadyToDelete = true
+      this.isReadyToDelete = !this.isReadyToDelete
     },
     OnDelete() {
        this.rootListener.$emit('Delete', this.group.id)

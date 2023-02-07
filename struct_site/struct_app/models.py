@@ -8,9 +8,6 @@ from datetime import date, datetime
 from PIL import Image
 
 
-
-
-
 class Group(MPTTModel):
     title = models.CharField(max_length=20, verbose_name='Краткое наименование')
     full_title = models.CharField(max_length=100, verbose_name='Полное наименование')
@@ -59,11 +56,17 @@ class Unit(models.Model):
     birthdayDate = models.DateField(auto_now=False, null=True, blank=True)
     slug = models.SlugField(max_length=150, null=True)
     group = TreeForeignKey('Group', on_delete=models.CASCADE, related_name='units', verbose_name='Подразделение')
-    image = models.ImageField(upload_to='unit_photos/', blank=True, null=True, )
+    image = models.ImageField(upload_to='unit_photos/', blank=True, null=True,
+                              default='unit_photos/default/default.jpg', )
 
     class Meta:
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
+
+    def delete(self, using=None, keep_parents=False):
+        if self.image.url != '/media/unit_photos/default/default.jpg':
+            self.image.delete()
+        super().delete()
 
     def get_age(self):
         today = date.today()

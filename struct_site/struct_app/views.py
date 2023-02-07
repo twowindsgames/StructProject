@@ -13,12 +13,12 @@ from .serializers import *
 from slugify import slugify
 
 
-
 class GroupListView(APIView):
     def get(self, request):
         groups = Group.objects.root_nodes()
         serializer = GroupSerializer(groups, many=True)
         return Response(serializer.data)
+
 
 class GroupDetailView(APIView):
     def get(self, request, tree_hierarchy):
@@ -37,6 +37,7 @@ class GroupDetailView(APIView):
 
         serializer = GroupDetailSerializer(group)
         return Response(serializer.data)
+
     def post(self, request, tree_hierarchy):
 
         query = JSONParser().parse(request)
@@ -48,6 +49,7 @@ class GroupDetailView(APIView):
             return Response("Added Successfully")
         else:
             return Response("Added Error")
+
     def put(self, request, tree_hierarchy):
         query = JSONParser().parse(request)
         query['slug'] = slugify(query['title'])
@@ -59,6 +61,7 @@ class GroupDetailView(APIView):
             return Response("Added Successfully")
         else:
             return Response("Added Error")
+
     def delete(self, request, tree_hierarchy):
         groupId = request.query_params.get('groupId', None)
         group = Group.objects.get(id=groupId)
@@ -79,6 +82,10 @@ class UnitsListView(APIView):
 
     def post(self, request):
         query = request.data
+        if query['image'] == 'default':
+            query = query.copy()
+            del query['image']
+
         serialize_data = UnitSerializer(data=query)
         if serialize_data.is_valid():
             serialize_data.save()

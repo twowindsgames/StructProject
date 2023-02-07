@@ -1,5 +1,7 @@
 <template>
   <div class="struct">
+
+
         <q-list v-for="group in groups" v-bind:key="group.id" >
             <recursive_tree
                 @Delete="OnDelete"
@@ -8,7 +10,8 @@
                 :depth="0">
             </recursive_tree>
         </q-list>
-
+        <context_menu :mode="'root'">
+        </context_menu>
 <modal_menu v-model="editTreeModalView" :title="modalOptions.title">
   <post_form @DataPost="OnDataPost" :mode="modalOptions.mode" :current_data=modalOptions.group ></post_form>
 </modal_menu>
@@ -26,7 +29,7 @@ import recursive_tree from '../components/recursive_tree.vue'
 import modal_menu from '../components/modal_menu.vue'
 import { defineComponent } from "vue";
 import post_form from '../components/post_form.vue'
-
+import context_menu from '../components/context_menu.vue'
 export default defineComponent({
   name: 'StructMenu',
   data() {
@@ -46,6 +49,7 @@ export default defineComponent({
     post_form,
     recursive_tree,
     modal_menu,
+    context_menu,
 
 
   },

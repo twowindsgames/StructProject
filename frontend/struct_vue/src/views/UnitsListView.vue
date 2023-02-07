@@ -4,7 +4,7 @@
 
     <q-page-sticky position="top" expand class="bg-accent text-white">
        <div>
-        ssssssss {{ group.title }}
+
       </div>
 
 
