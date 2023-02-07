@@ -59,7 +59,7 @@ class Unit(models.Model):
     birthdayDate = models.DateField(auto_now=False, null=True, blank=True)
     slug = models.SlugField(max_length=150, null=True)
     group = TreeForeignKey('Group', on_delete=models.CASCADE, related_name='units', verbose_name='Подразделение')
-    image = models.ImageField(upload_to='', blank=True, null=True)
+    image = models.ImageField(upload_to='', blank=True, null=True, height_field=None, width_field=None, max_length=10000,)
 
     class Meta:
         verbose_name = 'Сотрудник'

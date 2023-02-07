@@ -40,8 +40,8 @@
          <q-file
       v-model="post_data_unit.image"
       label="Pick one file"
-      filled
-      style="max-width: 300px"
+
+
     />
 
 
@@ -102,6 +102,8 @@ export default {
       this.post_data_unit.birthdayDate= this.current_data.birthdayDate
       this.post_data_unit.group= this.current_data.group
       this.post_data_unit.id= this.current_data.id
+
+
 
     }
   },

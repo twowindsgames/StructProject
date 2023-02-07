@@ -78,8 +78,8 @@ class UnitsListView(APIView):
 
     def post(self, request):
         query = request.data
-        file = request.FILES['image']
-        file_name = default_storage.save(file.name, file)
+        #file = request.FILES['image']
+        #file_name = default_storage.save(file.name, file)
 
         serialize_data = UnitSerializer(data=query)
         if serialize_data.is_valid():
