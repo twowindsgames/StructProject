@@ -71,16 +71,14 @@ class GroupDetailView(APIView):
 
 class UnitsListView(APIView):
     def get(self, request):
+
         groupId = request.query_params.get('groupId', None)
         queryset = Unit.objects.filter(group=groupId)
-        serializer = UnitSerializer(queryset, many=True)
+        serializer = UnitSerializer(queryset, many=True, context={"request": request})
         return Response(serializer.data)
 
     def post(self, request):
         query = request.data
-        #file = request.FILES['image']
-        #file_name = default_storage.save(file.name, file)
-
         serialize_data = UnitSerializer(data=query)
         if serialize_data.is_valid():
             serialize_data.save()

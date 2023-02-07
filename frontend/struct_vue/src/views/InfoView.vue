@@ -10,16 +10,14 @@
         <p>Средний возраст: {{statistic['averAge']}} г.</p>
         <p>Средний стаж: {{statistic['averExp']}} г.</p>
       </div>
-
-
-
     </div>
 
-
- <div class=" unit-list  q-gutter-md justify-center" >
+    <div class="row row-up text-white"  >
+ <div class="unit-list  q-gutter-md justify-center" >
      <q-intersection  v-for="unit in units" v-bind:key="unit.id" transition="fade">
      <unit_list  @Delete="OnDelete" @ShowUnitEdit="OnShowUnitEdit" :unit="unit"> </unit_list>
      </q-intersection>
+    </div>
 </div>
 <q-page-sticky   position="right" style="margin-right: 30px" >
         <q-btn  @click="OnShowUnitEdit('add unit',null)" round color="green" icon="add" ></q-btn>
@@ -27,7 +25,7 @@
 <modal_menu v-model="editUnitModalView" :title="editOptions.title">
       <post_form @DataPost="OnDataPost" :current_data="editOptions.unit" :mode="editOptions.mode" :group_id="group.id" >
       </post_form>
- </modal_menu>
+</modal_menu>
 
   </div>
  <router-view />
@@ -142,7 +140,7 @@ export default {
   width: 90%
   margin: 0 auto
 .row-up
-  height: 95px
+  min-height: 95px
 .col-up
   border: 1px solid rgba(138, 139, 185, 0.79)
 .col-up p

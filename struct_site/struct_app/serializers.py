@@ -4,7 +4,7 @@ from .models import Group, Unit
 
 
 class GroupSerializer(serializers.ModelSerializer):
-    children = RecursiveField(many=True,)
+    children = RecursiveField(many=True, )
 
     class Meta:
         model = Group
@@ -40,8 +40,11 @@ class GroupDetailSerializer(serializers.ModelSerializer):
 
 
 class UnitSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField('get_image_url')
+
     class Meta:
         model = Unit
+
         fields = (
             "id",
             "group",
@@ -50,6 +53,11 @@ class UnitSerializer(serializers.ModelSerializer):
             "dateOfJoining",
             "birthdayDate",
             "get_age",
-            "get_image",
+            "image_url",
             "image",
         )
+
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        image_url = obj.image.url
+        return request.build_absolute_uri(image_url)
