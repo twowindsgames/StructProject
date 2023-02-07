@@ -3,15 +3,15 @@
        <context_menu
             @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
             :group="group"
-            :readyToDelete="checkToDelete()">
+            :readyToDelete="checkToDelete()"
+             :root=false>
         </context_menu>
 
     <q-item :class="[checkToDelete() ? 'bg-red-2' :  'bg-yellow-2']"
           clickable  :to="'/structure' + group.get_absolute_url"
                       :style="indent"
-
                       :hide-expand-icon="group.is_leaf_node">
-          <p > {{group.slug}}</p>
+          <p > {{group.full_title}}</p>
           <div v-if="checkToDelete()">(подтвердите)</div>
 
           <div name="arrow"   v-if="!group.is_leaf_node">

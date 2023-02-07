@@ -1,5 +1,5 @@
 <template>
-  <div class="struct">
+  <div class="struct" style="height: 100%"  >
 
 
         <q-list v-for="group in groups" v-bind:key="group.id" >
@@ -10,12 +10,16 @@
                 :depth="0">
             </recursive_tree>
         </q-list>
-        <context_menu :mode="'root'">
-        </context_menu>
+
+<div name="no-node-zone" style="height: 100%" >
+    <context_menu :root=true @ShowEditTree="OnShowEditTree">
+    </context_menu></div>
+
 <modal_menu v-model="editTreeModalView" :title="modalOptions.title">
   <post_form @DataPost="OnDataPost" :mode="modalOptions.mode" :current_data=modalOptions.group ></post_form>
 </modal_menu>
   </div>
+
  <router-view />
 </template>
 
@@ -83,10 +87,10 @@ export default defineComponent({
     },
 
     OnShowEditTree(mode,group) {
-    this.modalOptions.mode = mode
+      this.modalOptions.mode = mode
     this.modalOptions.group = group
     if (mode==="edit")  this.modalOptions.title = "Изменить информацию о подразделении"
-    else  this.modalOptions.title = "Добавить подчиненное подразделение"
+    else  this.modalOptions.title = "Добавить подразделение"
     this.editTreeModalView=true
     },
   }

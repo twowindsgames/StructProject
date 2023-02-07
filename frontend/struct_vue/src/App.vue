@@ -7,16 +7,16 @@
 
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+            <q-icon name="groups" size="2em"/>
           </q-avatar>
-          Title
+          Структура
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
 
-   <q-drawer show-if-above v-model="leftDrawerOpen" behavior="desktop" side="left" bordered>
-     <q-list >
+   <q-drawer show-if-above style="height: 100%" v-model="leftDrawerOpen" behavior="desktop" side="left" bordered>
+     <q-list style="height: 100%" >
           <router-view name="struct"/>
       </q-list>
    </q-drawer>
@@ -32,10 +32,7 @@
     <q-footer elevated class="bg-grey-8 text-white">
       <q-toolbar>
         <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
-          <div>Title</div>
+          <div>Тестовое задание</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>

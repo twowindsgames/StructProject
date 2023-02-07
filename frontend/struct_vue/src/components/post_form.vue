@@ -95,12 +95,12 @@ export default {
       this.post_data_node.parent= this.current_data.parent
     }
       if(this.mode==='edit unit') {
-      this.post_data_unit.employeeName= this.current_data.employeeName
-      this.post_data_unit.employeePost= this.current_data.employeePost
-      this.post_data_unit.dateOfJoining= this.current_data.dateOfJoining
-      this.post_data_unit.birthdayDate= this.current_data.birthdayDate
-      this.post_data_unit.group= this.current_data.group
-      this.post_data_unit.id= this.current_data.id
+      this.post_data_unit.employeeName = this.current_data.employeeName
+      this.post_data_unit.employeePost = this.current_data.employeePost
+      this.post_data_unit.dateOfJoining = this.current_data.dateOfJoining
+      this.post_data_unit.birthdayDate = this.current_data.birthdayDate
+      this.post_data_unit.group = this.current_data.group
+      this.post_data_unit.id = this.current_data.id
 
     }
 
@@ -108,16 +108,20 @@ export default {
 
   methods:{
     PostData(){
-     if(this.mode==='edit node' || this.mode==='add node') {
-      if(this.mode==='add node') this.post_data_node.parent = this.current_data.id
+     if(this.mode==='edit node' || this.mode==='add node')
+     {
+      if(this.mode==='add node')
+       if (this.current_data==null)
+          {this.post_data_node.parent = ''}
+       else
+          {this.post_data_node.parent = this.current_data.id}
+
        this.$emit('DataPost', this.post_data_node)
      }
      else {
-
      this.post_data_unit.group = this.group_id
-
      this.$emit('DataPost', this.post_data_unit)
-     }
+        }
     }
 
   }
