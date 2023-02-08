@@ -1,24 +1,26 @@
 <template>
   <div class="info">
-    <div class="row row-up text-white">
-      <div class="col-10 col-up bg-indigo-4 text-center">
+    <div class="row row-up  text-white">
+      <div class="col-10 col-up bg-indigo-4 text-center ">
         <p class="text-h3 text-weight-bold">{{ group.full_title }}</p>
         <p class="text-weight-thin">{{ group.title }}</p>
       </div>
-      <div class="col col-up bg-indigo-3 text-italic	">
+      <div class="col col-up bg-indigo-3 text-italic q-pa-xs 	">
         <p>Сотрудников: {{statistic['employees_count']}} ч.</p>
         <p>Средний возраст: {{statistic['aver_age']}} г.</p>
         <p>Средний стаж: {{statistic['aver_exp']}} г.</p>
       </div>
     </div>
 
-    <div class="row row-up text-white"  >
+ <div class="row row-up text-white">
  <div class="employee-list  q-gutter-md justify-center" >
      <q-intersection v-for="employee in employees" v-bind:key="employee.id" transition="fade">
      <employees_list @Delete="OnDelete" @ShowEmployeeEdit="OnShowEmployeeEdit" :employee="employee"> </employees_list>
      </q-intersection>
     </div>
 </div>
+
+
 <q-page-sticky   position="right" style="margin-right: 30px" >
         <q-btn @click="OnShowEmployeeEdit('add employee',null)" round color="green" icon="add" ></q-btn>
 </q-page-sticky>

@@ -1,24 +1,26 @@
 <template>
-  <div class="struct" style="height: 100%"  >
-        <q-list  v-for="group in groups" v-bind:key="group.id" >
-            <recursive_tree
-                @Delete="OnDelete"
-                @ShowEditTree="OnShowEditTree"
-                :group="group"
-                :depth="0">
-            </recursive_tree>
-        </q-list>
+  <div class="struct " style="height: 100%">
 
-<div name="no-node-zone" style="height: 100%" >
-    <context_menu :root=true @ShowEditTree="OnShowEditTree">
-    </context_menu></div>
+    <q-list  v-for="group in groups" v-bind:key="group.id" >
+      <recursive_tree
+          @Delete="OnDelete"
+          @ShowEditTree="OnShowEditTree"
+          :group="group"
+          :depth="0">
+      </recursive_tree>
+    </q-list>
 
-<modal_menu v-model="editTreeModalView" :title="modalOptions.title">
-  <post_form @DataPost="OnDataPost" :mode="modalOptions.mode" :current_data=modalOptions.group ></post_form>
-</modal_menu>
+      <div name="no-node-zone" style="height: 100%" >
+          <context_menu :root=true @ShowEditTree="OnShowEditTree"/>
+      </div>
+
+      <modal_menu v-model="editTreeModalView" :title="modalOptions.title">
+        <post_form @DataPost="OnDataPost" :mode="modalOptions.mode" :current_data=modalOptions.group ></post_form>
+      </modal_menu>
+
   </div>
 
- <router-view />
+
 </template>
 
 
