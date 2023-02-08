@@ -1,5 +1,6 @@
 <template>
   <div class="info">
+
     <div class="row row-up  text-white">
       <div class="col-10 col-up bg-indigo-4 text-center ">
         <p class="text-h3 text-weight-bold">{{ group.full_title }}</p>
@@ -12,25 +13,24 @@
       </div>
     </div>
 
- <div class="row row-up text-white">
- <div class="employee-list  q-gutter-md justify-center" >
-     <q-intersection v-for="employee in employees" v-bind:key="employee.id" transition="fade">
-     <employees_list @Delete="OnDelete" @ShowEmployeeEdit="OnShowEmployeeEdit" :employee="employee"> </employees_list>
-     </q-intersection>
+   <div class="row row-up text-white">
+        <div class="employee-list  q-gutter-md justify-center" >
+             <q-intersection v-for="employee in employees" v-bind:key="employee.id" transition="fade">
+               <employees_card @Delete="OnDelete" @ShowEmployeeEdit="OnShowEmployeeEdit" :employee="employee"> </employees_card>
+             </q-intersection>
+            </div>
+        </div>
+
+        <q-page-sticky   position="right" style="margin-right: 30px" >
+                <q-btn @click="OnShowEmployeeEdit('add employee',null)" round color="green" icon="add" ></q-btn>
+        </q-page-sticky>
     </div>
-</div>
 
+      <modal_menu v-model="editEmployeeModalView" :title="editOptions.title">
+            <post_form @DataPost="OnDataPost" :current_data="editOptions.employee" :mode="editOptions.mode" :group_id="group.id" >
+            </post_form>
+      </modal_menu>
 
-<q-page-sticky   position="right" style="margin-right: 30px" >
-        <q-btn @click="OnShowEmployeeEdit('add employee',null)" round color="green" icon="add" ></q-btn>
-</q-page-sticky>
-<modal_menu v-model="editEmployeeModalView" :title="editOptions.title">
-      <post_form @DataPost="OnDataPost" :current_data="editOptions.employee" :mode="editOptions.mode" :group_id="group.id" >
-      </post_form>
-</modal_menu>
-
-  </div>
- <router-view />
 </template>
 
 
@@ -39,16 +39,14 @@
 <script>
 
 import axios from 'axios'
-import employees_list from "../components/employees_list.vue";
+import employees_card from "../components/employees_card";
 import modal_menu from '../components/modal_menu.vue'
 import post_form from '../components/post_form.vue'
-
-
 
 export default {
   name: 'GroupInfo',
   components: {
-  employees_list, modal_menu, post_form
+  employees_card, modal_menu, post_form
   },
   data() {
     return {
@@ -60,15 +58,16 @@ export default {
     }
   },
    mounted() {
-
      this.getGroupDetailInfo()
-
   },
 
   methods: {
+    updateInfo(){
+       this.getGroupEmployees(this.group.id)
+       this.getGroupDetailInfo()
+    },
 
     getGroupDetailInfo() {
-
       const tree_hierarchy = this.$route.params.tree_hierarchy
       axios
           .get(`/api/group/${tree_hierarchy}`)
@@ -81,62 +80,46 @@ export default {
           .catch(error => {
             console.log(error)
           })
-
-
     },
+
     getGroupEmployees(group_id) {
     axios
         .get("/api/employees",{ params: { group_id: group_id }})
         .then(response => {
           this.employees = response.data
-          this.isLoadUnits = false;
         })
         .catch(error => {
           console.log(error)
         })
 
   },
-    OnDelete(id){
-     axios.delete('/api/employees', {params: {id: id}}).then(response => {
-        this.getGroupEmployees(this.group.id)
-
-          this.getGroupDetailInfo()
-              console.log(response)})
-                .catch(error => {console.log(error)})
-    },
 
      OnShowEmployeeEdit(mode, employee) {
-
-    this.editOptions.mode = mode
-    this.editOptions.employee = employee
-
-    if (mode==="edit employee")  this.editOptions.title = "Изменить информацию о сотруднике"
-    else  this.editOptions.title = "Добавить сотрудника"
-    this.editEmployeeModalView=true
+      this.editOptions.mode = mode
+      this.editOptions.employee = employee
+      if (mode==="edit employee")  this.editOptions.title = "Изменить информацию о сотруднике"
+      else  this.editOptions.title = "Добавить сотрудника"
+      this.editEmployeeModalView=true
 
     },
-
      OnDataPost(post_data){
      let request
 
      if (this.editOptions.mode==="add employee")request=axios.post('api/employees', post_data,{headers: {"Content-Type": "multipart/form-data"}})
      if (this.editOptions.mode==="edit employee")request= axios.put('api/employees', post_data,{headers: {"Content-Type": "multipart/form-data"}})
        request.then(response => {
-          this.getGroupEmployees(this.group.id)
-          this.getGroupDetailInfo()
+              this.updateInfo()
               console.log(response)})
                 .catch(error => {console.log(error)})
 
     },
-
-
-
+     OnDelete(id){
+     axios.delete('/api/employees', {params: {id: id}}).then(response => {
+       this.updateInfo()
+              console.log(response)})
+                .catch(error => {console.log(error)})
+    },
 },
-
-
-
-
-
 }
 </script>
 <style lang="sass" scoped>

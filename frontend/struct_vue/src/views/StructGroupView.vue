@@ -23,26 +23,22 @@
 
 </template>
 
-
-
-
 <script>
 
 import axios from 'axios'
 import recursive_tree from '../components/recursive_tree.vue'
 import modal_menu from '../components/modal_menu.vue'
-import { defineComponent } from "vue";
+
 import post_form from '../components/post_form.vue'
 import context_menu from '../components/context_menu.vue'
-export default defineComponent({
+
+export default {
   name: 'StructMenu',
   data() {
     return {
       groups: [],
       modalOptions: {mode: 'режим', title: 'заголовок', group: Object},
       editTreeModalView: false
-
-
     }
   },
   mounted() {
@@ -69,7 +65,14 @@ export default defineComponent({
             console.log(error)
           })
     },
-    OnDelete(id){
+    OnShowEditTree(mode,group) {
+      this.modalOptions.mode = mode
+    this.modalOptions.group = group
+    if (mode==="edit")  this.modalOptions.title = "Изменить информацию о подразделении"
+    else  this.modalOptions.title = "Добавить подразделение"
+    this.editTreeModalView=true
+    },
+        OnDelete(id){
      axios.delete('api/group/', {params: {group_id: id},}).then(response => {
         this.getLatestProducts()
               console.log(response)})
@@ -85,15 +88,7 @@ export default defineComponent({
               console.log(response)})
                 .catch(error => {console.log(error)})
     },
-
-    OnShowEditTree(mode,group) {
-      this.modalOptions.mode = mode
-    this.modalOptions.group = group
-    if (mode==="edit")  this.modalOptions.title = "Изменить информацию о подразделении"
-    else  this.modalOptions.title = "Добавить подразделение"
-    this.editTreeModalView=true
-    },
   }
-})
+}
 </script>
 

@@ -9,7 +9,8 @@
        <div v-else>
       <q-input class="post-item" outlined v-model="post_data_employee.employee_name" placeholder="Иванов Иван Иванович" hint="ФИО сотрудника"  />
       <q-input class="post-item" outlined v-model="post_data_employee.employee_post" placeholder="инженер" hint="Должность сотрудника"  />
-      <q-input class="post-item" outlined v-model="post_data_employee.birthday_date" placeholder="23.07.2000" hint="Дата рождения"  >
+
+     <q-input class="post-item" outlined v-model="post_data_employee.birthday_date" placeholder="23.07.2000" hint="Дата рождения"  >
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -23,7 +24,7 @@
         </template>
     </q-input>
 
-          <q-input class="post-item" outlined v-model="post_data_employee.date_of_joining" placeholder="23.07.2000" hint="Дата начала работы"  >
+    <q-input class="post-item" outlined v-model="post_data_employee.date_of_joining" placeholder="23.07.2000" hint="Дата начала работы"  >
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -37,6 +38,7 @@
         </template>
     </q-input>
 
+<date_input :date="post_data_employee.birthday_date" :title="asas"></date_input>
          <q-file
       v-model="post_data_employee.image"
       label="Фото сотрудника (необязательно)"
@@ -58,7 +60,7 @@
 </template>
 
 <script>
-import date_input from "@/components/date_input";
+
 
 export default {
   props: ['mode','current_data', 'group_id'],
@@ -69,7 +71,6 @@ export default {
         title: '',
         parent: '',
         id:'',
-
       },
       post_data_employee:{
            employee_name: '',
@@ -84,9 +85,7 @@ export default {
 
     }
   },
-  components(){
-    date_input
-  },
+
   mounted() {
     if(this.mode==='edit node') {
       this.post_data_node.full_title= this.current_data.full_title
@@ -101,26 +100,29 @@ export default {
       this.post_data_employee.birthday_date = this.current_data.birthday_date
       this.post_data_employee.group = this.current_data.group
       this.post_data_employee.id = this.current_data.id
-
     }
 
   },
 
   methods:{
     PostData(){
-     if(this.mode==='edit node' || this.mode==='add node')
+     if(this.mode.includes('node') )
      {
-      if(this.mode==='add node')
        if (this.current_data==null)
           {this.post_data_node.parent = ''}
        else
-          {this.post_data_node.parent = this.current_data.id}
+          {
+            if (this.mode.includes('edit'))
+              this.post_data_node.parent = this.current_data.parent
+            else
+              this.post_data_node.parent = this.current_data.id
+          }
+      this.$emit('DataPost', this.post_data_node)
 
-       this.$emit('DataPost', this.post_data_node)
      }
      else {
-     this.post_data_employee.group = this.group_id
-     this.$emit('DataPost', this.post_data_employee)
+         this.post_data_employee.group = this.group_id
+         this.$emit('DataPost', this.post_data_employee)
         }
     }
 
