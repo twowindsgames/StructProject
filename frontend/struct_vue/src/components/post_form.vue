@@ -23,7 +23,7 @@
         </template>
     </q-input>
 
-          <q-input  class="post-item"  outlined v-model="post_data_unit.dateOfJoining" placeholder="23.07.2000" hint="Дата рождения"  >
+          <q-input  class="post-item"  outlined v-model="post_data_unit.dateOfJoining" placeholder="23.07.2000" hint="Дата начала работы"  >
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">

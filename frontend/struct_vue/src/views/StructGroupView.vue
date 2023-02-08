@@ -2,7 +2,7 @@
   <div class="struct" style="height: 100%"  >
 
 
-        <q-list v-for="group in groups" v-bind:key="group.id" >
+        <q-list  v-for="group in groups" v-bind:key="group.id" >
             <recursive_tree
                 @Delete="OnDelete"
                 @ShowEditTree="OnShowEditTree"

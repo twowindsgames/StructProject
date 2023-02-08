@@ -6,9 +6,9 @@
         <p class="text-weight-thin">{{ group.title }}</p>
       </div>
       <div class="col col-up bg-indigo-3 text-italic	">
-        <p>Сотрудников: {{statistic['unitsCount']}} ч.</p>
-        <p>Средний возраст: {{statistic['averAge']}} г.</p>
-        <p>Средний стаж: {{statistic['averExp']}} г.</p>
+        <p>Сотрудников: {{statistic['units_count']}} ч.</p>
+        <p>Средний возраст: {{statistic['aver_age']}} г.</p>
+        <p>Средний стаж: {{statistic['aver_exp']}} г.</p>
       </div>
     </div>
 

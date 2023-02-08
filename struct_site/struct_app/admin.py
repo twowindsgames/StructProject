@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
-from .models import Group, Unit
+from .models import Group, Employee
 
 
 class GroupAdmin(MPTTModelAdmin):
@@ -13,8 +13,8 @@ class GroupAdmin(MPTTModelAdmin):
 admin.site.register(Group, GroupAdmin)
 
 
-class UnitAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("employeeName",)}
+class EmployeeAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("employee_name",)}
 
 
-admin.site.register(Unit, UnitAdmin)
+admin.site.register(Employee, Employee)

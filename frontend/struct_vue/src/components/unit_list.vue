@@ -1,14 +1,14 @@
 <template>
      <q-card  class="row unit-card bg-indigo-2 text-black rounded-borders" >
-      <div class="col-3 unit  text-center">
-         <q-img :src=unit.image_url style="height: 200px; width: 200px"/>
+      <div class="col-3 unit  text-center" style="margin: auto">
+         <q-img  :src=unit.image_url style="height: 220px; width: 200px;  " />
       </div>
        <q-card-section class="col-8 dense bordered padding unit">
         <q-item class="text-h4 text-center">{{unit.employeeName}} </q-item>
         <q-separator></q-separator>
         <q-item class="text-subtitle1">Должность: {{unit.employeePost}}</q-item>
         <q-item class="text-subtitle1">Дата начала работы: {{unit.dateOfJoining}}</q-item>
-        <q-item class="text-subtitle1">Дата рождения: {{unit.dateOfJoining}}</q-item>
+        <q-item class="text-subtitle1">Дата рождения: {{unit.birthdayDate}}</q-item>
       </q-card-section>
       <q-card-actions  class=" col-xs-1 unit" >
        <q-btn flat icon="edit" style="margin: auto" size="1.5em" @click="$emit('ShowUnitEdit', 'edit unit', unit)"></q-btn>

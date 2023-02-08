@@ -1,11 +1,6 @@
 from django.db import models
-import math
-
-from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
-from autoslug import AutoSlugField
-from datetime import date, datetime
-from PIL import Image
+from datetime import date
 
 
 class Group(MPTTModel):
@@ -32,28 +27,27 @@ class Group(MPTTModel):
         return url
 
     def get_group_stat(self):
-        groupUnits = Unit.objects.filter(group=self, )
-        unitsCount = groupUnits.count()
-        if unitsCount == 0:
-            return {"unitsCount": 0, "averAge": 0, "averExp": 0}
-        averAge = 0
-        averExp = 0
-        for unit in groupUnits:
-            averAge += unit.get_age()
-            averExp += unit.get_experience()
-        averAge /= unitsCount
-        averExp /= unitsCount
-        return {"unitsCount": unitsCount, "averAge": int(averAge), "averExp": int(averExp)}
+        group_units = Employee.objects.filter(group=self, )
+        units_count = group_units.count()
+        if units_count == 0:
+            return {"units_count": 0, "averAge": 0, "averExp": 0}
+        aver_age = aver_exp = 0
+        for unit in group_units:
+            aver_age += unit.get_age()
+            aver_exp += unit.get_experience()
+        aver_age /= units_count
+        aver_exp /= units_count
+        return {"units_count": units_count, "aver_age": int(aver_age), "aver_exp": int(aver_exp)}
 
     def __str__(self):
         return self.title
 
 
-class Unit(models.Model):
-    employeeName = models.CharField(max_length=50, verbose_name='ФИО сотрудника')
-    employeePost = models.CharField(max_length=50, verbose_name='Должность')
-    dateOfJoining = models.DateField()
-    birthdayDate = models.DateField(auto_now=False, null=True, blank=True)
+class Employee(models.Model):
+    employee_name = models.CharField(max_length=50, verbose_name='ФИО сотрудника')
+    employee_post = models.CharField(max_length=50, verbose_name='Должность')
+    date_of_joining = models.DateField()
+    birthday_date = models.DateField(auto_now=False, null=True, blank=True)
     slug = models.SlugField(max_length=150, null=True)
     group = TreeForeignKey('Group', on_delete=models.CASCADE, related_name='units', verbose_name='Подразделение')
     image = models.ImageField(upload_to='unit_photos/', blank=True, null=True,
@@ -70,15 +64,15 @@ class Unit(models.Model):
 
     def get_age(self):
         today = date.today()
-        age = today.year - self.birthdayDate.year - (
-                (today.month, today.day) < (self.birthdayDate.month, self.birthdayDate.day))
+        age = today.year - self.birthday_date.year - (
+                (today.month, today.day) < (self.birthday_date.month, self.birthday_date.day))
         return age
 
     def get_experience(self):
         today = date.today()
-        experience = today.year - self.dateOfJoining.year - (
-                (today.month, today.day) < (self.dateOfJoining.month, self.dateOfJoining.day))
+        experience = today.year - self.date_of_joining.year - (
+                (today.month, today.day) < (self.date_of_joining.month, self.date_of_joining.day))
         return experience
 
     def __str__(self):
-        return self.employeeName
+        return self.employee_name

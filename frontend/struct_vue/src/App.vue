@@ -15,8 +15,8 @@
     </q-header>
 
 
-   <q-drawer show-if-above style="height: 100%" v-model="leftDrawerOpen" behavior="desktop" side="left" bordered>
-     <q-list style="height: 100%" >
+   <q-drawer  show-if-above style="height: 100%" v-model="leftDrawerOpen"  :width="350" behavior="desktop" side="left" bordered>
+     <q-list style="height: 100%"  >
           <router-view name="struct"/>
       </q-list>
    </q-drawer>

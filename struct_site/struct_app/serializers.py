@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework_recursive.fields import RecursiveField
-from .models import Group, Unit
+from .models import Group, Employee
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -43,7 +43,7 @@ class UnitSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField('get_image_url')
 
     class Meta:
-        model = Unit
+        model = Employee
         fields = (
             "id",
             "group",

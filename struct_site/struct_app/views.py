@@ -6,7 +6,7 @@ from django.views.generic import ListView
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 
-from .models import Group, Unit
+from .models import Group, Employee
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import *
@@ -76,7 +76,7 @@ class UnitsListView(APIView):
     def get(self, request):
 
         groupId = request.query_params.get('groupId', None)
-        queryset = Unit.objects.filter(group=groupId)
+        queryset = Employee.objects.filter(group=groupId)
         serializer = UnitSerializer(queryset, many=True, context={"request": request})
         return Response(serializer.data)
 
@@ -96,7 +96,7 @@ class UnitsListView(APIView):
     def put(self, request):
         query = JSONParser().parse(request)
         unitId = query['id']
-        unit = Unit.objects.get(id=unitId)
+        unit = Employee.objects.get(id=unitId)
         serialize_data = UnitSerializer(unit, data=query)
         if serialize_data.is_valid():
             serialize_data.save()
@@ -106,7 +106,7 @@ class UnitsListView(APIView):
 
     def delete(self, request):
         unitId = request.query_params.get('id', None)
-        unit = Unit.objects.get(id=unitId)
+        unit = Employee.objects.get(id=unitId)
         unit.delete()
         if Group.objects.filter(id=unitId) is None:
             return Response("Delete Successfully")
