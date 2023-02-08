@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                 ('dateOfJoining', models.DateField()),
                 ('slug', models.SlugField(max_length=150)),
                 ('content', models.TextField(verbose_name='Содержание')),
-                ('group', mptt.fields.TreeForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='units', to='struct_app.group', verbose_name='Подразделение')),
+                ('group', mptt.fields.TreeForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='employees', to='struct_app.group', verbose_name='Подразделение')),
             ],
             options={
                 'verbose_name': 'Сотрудник',

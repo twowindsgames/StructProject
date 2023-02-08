@@ -1,14 +1,9 @@
-from django.urls import path, re_path, include
+from django.urls import path, re_path
 from .views import *
-
-
-
-
-from django.urls import path, include
 
 urlpatterns = [
     path('group/all/', GroupListView.as_view()),
 
     re_path(r"group/(?P<tree_hierarchy>.*)", GroupDetailView.as_view()),
-    re_path(r'.*units', UnitsListView.as_view(),)
+    re_path(r'.*employees', EmployeeListView.as_view(), )
 ]

@@ -29,7 +29,7 @@ import axios from 'axios'
 
 
 export default {
-  name: 'UnitsList',
+  name: 'EmployeeList',
 
   data() {
     return {

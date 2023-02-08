@@ -27,17 +27,17 @@ class Group(MPTTModel):
         return url
 
     def get_group_stat(self):
-        group_units = Employee.objects.filter(group=self, )
-        units_count = group_units.count()
-        if units_count == 0:
-            return {"units_count": 0, "averAge": 0, "averExp": 0}
+        employees = Employee.objects.filter(group=self, )
+        employees_count = employees.count()
+        if employees_count == 0:
+            return {"employees_count": 0, "aver_age": 0, "aver_exp": 0}
         aver_age = aver_exp = 0
-        for unit in group_units:
-            aver_age += unit.get_age()
-            aver_exp += unit.get_experience()
-        aver_age /= units_count
-        aver_exp /= units_count
-        return {"units_count": units_count, "aver_age": int(aver_age), "aver_exp": int(aver_exp)}
+        for employee in employees:
+            aver_age += employee.get_age()
+            aver_exp += employee.get_experience()
+        aver_age /= employees_count
+        aver_exp /= employees_count
+        return {"employees_count": employees_count, "aver_age": int(aver_age), "aver_exp": int(aver_exp)}
 
     def __str__(self):
         return self.title
@@ -49,16 +49,16 @@ class Employee(models.Model):
     date_of_joining = models.DateField()
     birthday_date = models.DateField(auto_now=False, null=True, blank=True)
     slug = models.SlugField(max_length=150, null=True)
-    group = TreeForeignKey('Group', on_delete=models.CASCADE, related_name='units', verbose_name='Подразделение')
-    image = models.ImageField(upload_to='unit_photos/', blank=True, null=True,
-                              default='unit_photos/default/default.jpg', )
+    group = TreeForeignKey('Group', on_delete=models.CASCADE, related_name='employees', verbose_name='Подразделение')
+    image = models.ImageField(upload_to='employee_photos/', blank=True, null=True,
+                              default='employee_photos/default/default.jpg', )
 
     class Meta:
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
 
     def delete(self, using=None, keep_parents=False):
-        if self.image.url != '/media/unit_photos/default/default.jpg':
+        if self.image.url != '/media/employee_photos/default/default.jpg':
             self.image.delete()
         super().delete()
 

@@ -17,4 +17,4 @@ class EmployeeAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("employee_name",)}
 
 
-admin.site.register(Employee, Employee)
+admin.site.register(Employee, EmployeeAdmin)

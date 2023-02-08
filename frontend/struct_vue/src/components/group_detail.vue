@@ -1,5 +1,5 @@
 <template>
-  <div class="unit_list" >
+  <div class="employees_list" >
 
   </div>
 </template>
@@ -21,10 +21,10 @@
       toggleChildren() {
         this.isShow = !this.isShow;
       },
-       getUnitsByGroup: function (id) {
+       getEmployeesByGroup: function (id) {
 
       axios
-          .get('api/group/units', {params: {groupId: id}})
+          .get('api/group/employees', {params: {groupId: id}})
           .then(response => {
             this.groups = response.data
           })

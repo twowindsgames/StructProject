@@ -1,7 +1,5 @@
 <template>
   <div class="struct" style="height: 100%"  >
-
-
         <q-list  v-for="group in groups" v-bind:key="group.id" >
             <recursive_tree
                 @Delete="OnDelete"
@@ -70,7 +68,7 @@ export default defineComponent({
           })
     },
     OnDelete(id){
-     axios.delete('api/group/', {params: {groupId: id},}).then(response => {
+     axios.delete('api/group/', {params: {group_id: id},}).then(response => {
         this.getLatestProducts()
               console.log(response)})
                 .catch(error => {console.log(error)})

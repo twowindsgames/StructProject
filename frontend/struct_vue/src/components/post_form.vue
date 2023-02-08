@@ -7,13 +7,13 @@
       <q-input  class="post-item"  outlined v-model="post_data_node.title" placeholder="УИО" hint="Краткое название подразделения"  />
       </div>
        <div v-else>
-      <q-input  class="post-item"  outlined v-model="post_data_unit.employeeName"  placeholder="Иванов Иван Иванович" hint="ФИО сотрудника"  />
-      <q-input  class="post-item"  outlined v-model="post_data_unit.employeePost" placeholder="инженер" hint="Должность сотрудника"  />
-      <q-input  class="post-item"  outlined v-model="post_data_unit.birthdayDate" placeholder="23.07.2000" hint="Дата рождения"  >
+      <q-input class="post-item" outlined v-model="post_data_employee.employee_name" placeholder="Иванов Иван Иванович" hint="ФИО сотрудника"  />
+      <q-input class="post-item" outlined v-model="post_data_employee.employee_post" placeholder="инженер" hint="Должность сотрудника"  />
+      <q-input class="post-item" outlined v-model="post_data_employee.birthday_date" placeholder="23.07.2000" hint="Дата рождения"  >
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="post_data_unit.birthdayDate" mask="YYYY-MM-DD">
+              <q-date v-model="post_data_employee.birthday_date" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="primary" flat />
                 </div>
@@ -23,11 +23,11 @@
         </template>
     </q-input>
 
-          <q-input  class="post-item"  outlined v-model="post_data_unit.dateOfJoining" placeholder="23.07.2000" hint="Дата начала работы"  >
+          <q-input class="post-item" outlined v-model="post_data_employee.date_of_joining" placeholder="23.07.2000" hint="Дата начала работы"  >
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="post_data_unit.dateOfJoining" mask="YYYY-MM-DD">
+              <q-date v-model="post_data_employee.date_of_joining" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="primary" flat />
                 </div>
@@ -38,7 +38,7 @@
     </q-input>
 
          <q-file
-      v-model="post_data_unit.image"
+      v-model="post_data_employee.image"
       label="Фото сотрудника (необязательно)"
       filled
     />
@@ -71,11 +71,11 @@ export default {
         id:'',
 
       },
-      post_data_unit:{
-           employeeName: '',
-           employeePost: '',
-           dateOfJoining: '',
-           birthdayDate: '',
+      post_data_employee:{
+           employee_name: '',
+           employee_post: '',
+           date_of_joining: '',
+           birthday_date: '',
            group: '',
            id:'',
            image:'default',
@@ -94,13 +94,13 @@ export default {
       this.post_data_node.id= this.current_data.id
       this.post_data_node.parent= this.current_data.parent
     }
-      if(this.mode==='edit unit') {
-      this.post_data_unit.employeeName = this.current_data.employeeName
-      this.post_data_unit.employeePost = this.current_data.employeePost
-      this.post_data_unit.dateOfJoining = this.current_data.dateOfJoining
-      this.post_data_unit.birthdayDate = this.current_data.birthdayDate
-      this.post_data_unit.group = this.current_data.group
-      this.post_data_unit.id = this.current_data.id
+      if(this.mode==='edit employee') {
+      this.post_data_employee.employee_name = this.current_data.employee_name
+      this.post_data_employee.employee_post = this.current_data.employee_post
+      this.post_data_employee.date_of_joining = this.current_data.date_of_joining
+      this.post_data_employee.birthday_date = this.current_data.birthday_date
+      this.post_data_employee.group = this.current_data.group
+      this.post_data_employee.id = this.current_data.id
 
     }
 
@@ -119,8 +119,8 @@ export default {
        this.$emit('DataPost', this.post_data_node)
      }
      else {
-     this.post_data_unit.group = this.group_id
-     this.$emit('DataPost', this.post_data_unit)
+     this.post_data_employee.group = this.group_id
+     this.$emit('DataPost', this.post_data_employee)
         }
     }
 

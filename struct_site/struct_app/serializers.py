@@ -39,7 +39,7 @@ class GroupDetailSerializer(serializers.ModelSerializer):
         extra_kwargs = {'children': {'required': False, }}
 
 
-class UnitSerializer(serializers.ModelSerializer):
+class EmployeeSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField('get_image_url')
 
     class Meta:
@@ -47,10 +47,10 @@ class UnitSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "group",
-            "employeeName",
-            "employeePost",
-            "dateOfJoining",
-            "birthdayDate",
+            "employee_name",
+            "employee_post",
+            "date_of_joining",
+            "birthday_date",
             "get_age",
             "image_url",
             "image",
