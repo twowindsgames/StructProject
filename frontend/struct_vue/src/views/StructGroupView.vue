@@ -42,7 +42,7 @@ export default {
     }
   },
   mounted() {
-    this.getLatestProducts()
+    this.GetAllGroups()
 
   },
   components:{
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
 
-    getLatestProducts() {
+    getAllGroups() {
       axios
           .get('/api/group/all/')
           .then(response => {
