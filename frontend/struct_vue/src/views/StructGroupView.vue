@@ -42,7 +42,7 @@ export default {
     }
   },
   mounted() {
-    this.GetAllGroups()
+    this.getAllGroups()
 
   },
   components:{
