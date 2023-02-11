@@ -3,49 +3,54 @@
     <div class="q-gutter-y-md column post-form"  >
 
       <div v-if="mode==='edit node' || mode==='add node'">
-      <q-input  class="post-item"  outlined v-model="post_data_node.full_title"  placeholder="Управление информационного обеспечения" hint="Полное название подразделения"  />
-      <q-input  class="post-item"  outlined v-model="post_data_node.title" placeholder="УИО" hint="Краткое название подразделения"  />
+        <div>Название подразделения (полное)</div>
+      <q-input  class="post-item"  outlined v-model="post_data_node.full_title"  placeholder="Введите полное название"  />
+        <div>Название подразделения (сокращенное)</div>
+      <q-input  class="post-item"  outlined v-model="post_data_node.title" placeholder="Введите сокращенное название"  />
       </div>
        <div v-else>
-      <q-input class="post-item" outlined v-model="post_data_employee.employee_name" placeholder="Иванов Иван Иванович" hint="ФИО сотрудника"  />
-      <q-input class="post-item" outlined v-model="post_data_employee.employee_post" placeholder="инженер" hint="Должность сотрудника"  />
+<q-list>
+      <div>ФИО сотрудника</div>
+      <q-input class="post-item" outlined v-model="post_data_employee.employee_name"  placeholder="Введите ФИО"   />
+       <div>Должность</div>
+      <q-input class="post-item" outlined v-model="post_data_employee.employee_post" placeholder="Введите должность"   />
 
-     <q-input class="post-item" outlined v-model="post_data_employee.birthday_date" placeholder="23.07.2000" hint="Дата рождения"  >
+       <div>Дата рождения</div>
+     <q-input class="post-item" outlined v-model="post_data_employee.birthday_date" placeholder="Установите дату рождения"   >
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="post_data_employee.birthday_date" mask="YYYY-MM-DD">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
-                </div>
+              <q-date v-model="post_data_employee.birthday_date" v-close-popup mask="YYYY-MM-DD">
+
               </q-date>
             </q-popup-proxy>
           </q-icon>
         </template>
     </q-input>
-
-    <q-input class="post-item" outlined v-model="post_data_employee.date_of_joining" placeholder="23.07.2000" hint="Дата начала работы"  >
+<div>Дата начала работы</div>
+    <q-input class="post-item" outlined v-model="post_data_employee.date_of_joining" placeholder="Установите дату начала работы"   >
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="post_data_employee.date_of_joining" mask="YYYY-MM-DD">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
-                </div>
+              <q-date v-model="post_data_employee.date_of_joining" v-close-popup mask="YYYY-MM-DD">
+
               </q-date>
             </q-popup-proxy>
           </q-icon>
         </template>
     </q-input>
+<div>Фото сотрудника</div>
 
-<date_input :date="post_data_employee.birthday_date" :title="asas"></date_input>
+   <q-img v-if="imageURL" style="height: 220px; width: 200px;" class="q-pa-md q-ma-md "    :src="imageURL"  />
          <q-file
       v-model="post_data_employee.image"
-      label="Фото сотрудника (необязательно)"
+      @update:model-value="handleUpload()"
+      label="Добавьте фото сотрудника "
       filled
     />
 
 
+</q-list>
        </div>
 
       <div>
@@ -62,10 +67,18 @@
 <script>
 
 
+
+
+
+
+
 export default {
+
   props: ['mode','current_data', 'group_id'],
   data () {
     return {
+      imageURL: '',
+
       post_data_node: {
         full_title: '',
         title: '',
@@ -86,6 +99,7 @@ export default {
     }
   },
 
+
   mounted() {
     if(this.mode==='edit node') {
       this.post_data_node.full_title= this.current_data.full_title
@@ -104,35 +118,46 @@ export default {
 
   },
 
-  methods:{
-    PostData(){
-     if(this.mode.includes('node') )
-     {
-       if (this.current_data==null)
-          {this.post_data_node.parent = ''}
-       else
-          {
-            if (this.mode.includes('edit'))
-              this.post_data_node.parent = this.current_data.parent
-            else
-              this.post_data_node.parent = this.current_data.id
-          }
-      this.$emit('DataPost', this.post_data_node)
-
-     }
-     else {
-         this.post_data_employee.group = this.group_id
-         this.$emit('DataPost', this.post_data_employee)
+  methods: {
+    PostData() {
+      if (this.mode.includes('node')) {
+        if (this.current_data == null) {
+          this.post_data_node.parent = ''
+        } else {
+          if (this.mode.includes('edit'))
+            this.post_data_node.parent = this.current_data.parent
+          else
+            this.post_data_node.parent = this.current_data.id
         }
-    }
+        this.$emit('DataPost', this.post_data_node)
+
+      } else {
+        this.post_data_employee.group = this.group_id
+        this.$emit('DataPost', this.post_data_employee)
+      }
+    },
+     handleUpload ()  {
+
+      if ( this.post_data_employee.image) {
+
+        this.imageURL = URL.createObjectURL( this.post_data_employee.image);
+      }
+    },
+
 
   }
-}
+
+  }
+
+
 </script>
 
 <style lang="sass" scoped>
 .post-form
   min-width: 400px
 .post-item
-  margin-top: 8px
+  margin-top: 0px
+  margin-bottom: 8px
+.img
+  border: dashed red
 </style>
