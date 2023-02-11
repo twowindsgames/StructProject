@@ -18,7 +18,7 @@
                            <q-icon v-else name="arrow_right" size="2em" @click="toggleChildren">  </q-icon>
                         </div>
                         <div class="q-pa-none  q-ma-none div1 ">
-                          <em style="flex-wrap: wrap"> {{group.full_title}}</em>
+                          <em style="flex-wrap: wrap"> {{group.full_title}}  </em>
                           <i v-if="checkToDelete()"> (подтвердите)</i>
                         </div>
 
@@ -27,18 +27,18 @@
 
         </q-item>
 
-        <div v-if="isShow" transition-show="fade"  >
+        <div  v-show="isShow" transition-show="fade"  >
           <recursive_tree
           v-for="group in group.children"
           v-bind:key="group.id"
-            @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
+            @Delete="OnDelete" @ShowEditTree="OnShowEditTree" @OpenChildren="OnOpenChildren"
             :group="group"
             :depth="depth + 1"
             :isParentReadyToDelete="checkToDelete()"
             :root="rootListener">
           </recursive_tree>
-       </div>
 
+</div>
 
 
   </div>
@@ -52,24 +52,42 @@
     data() {
       return {
         isShow: false,
+        canBuild: false,
         isReadyToDelete: false,
         rootListener: null,
+        current_group_id: this.$store.getters.get_group_id
     }
     },
+
+
+
+
     mounted() {
+
       if (this.root == null){
         this.rootListener = this
       }
       else {
          this.rootListener = this.root
       }
+       if (this.$store.getters.get_group_id==this.group.id){
+            this.$emit('OpenChildren')
+       }
+
+
+
+
+
     },
 
-    computed: {
-      indent() {
-        return { transform: `translate(${this.depth * 8}%)` }
-      }
-    },
+
+
+
+
+
+
+
+
     components:{
     context_menu,
   },
@@ -77,19 +95,25 @@
       toggleChildren() {
         this.isShow = !this.isShow;
       },
+        OnOpenChildren() {
+        this.isShow = true;
+        this.$emit('OpenChildren')
+      },
 
-            onReadyDelete() {
-              this.isReadyToDelete = !this.isReadyToDelete
-            },
-            OnDelete() {
-               this.rootListener.$emit('Delete', this.group.id)
-            },
-            OnShowEditTree(mode) {
-               this.rootListener.$emit('ShowEditTree', mode, this.group)
-            },
-            checkToDelete(){
-                return (this.isReadyToDelete || this.isParentReadyToDelete)
-            }
+
+
+      onReadyDelete() {
+        this.isReadyToDelete = !this.isReadyToDelete
+      },
+      OnDelete() {
+         this.rootListener.$emit('Delete', this.group.id)
+      },
+      OnShowEditTree(mode) {
+         this.rootListener.$emit('ShowEditTree', mode, this.group)
+      },
+      checkToDelete(){
+          return (this.isReadyToDelete || this.isParentReadyToDelete)
+      }
 
  },
  }

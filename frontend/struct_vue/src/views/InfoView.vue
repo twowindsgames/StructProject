@@ -5,6 +5,7 @@
       <div class="col-10 col-up bg-indigo-4 text-center ">
         <p class="text-h3 text-weight-bold">{{ group.full_title }}</p>
         <p class="text-weight-thin">{{ group.title }}</p>
+
       </div>
       <div class="col col-up bg-indigo-3 text-italic q-pa-xs 	">
         <p>Сотрудников: {{statistic['employees_count']}} ч.</p>
@@ -58,13 +59,19 @@ export default {
     }
   },
    mounted() {
-     this.getGroupDetailInfo()
+
+
+  this.getGroupDetailInfo()
+
+
+
   },
 
   methods: {
     updateInfo(){
        this.getGroupEmployees(this.group.id)
        this.getGroupDetailInfo()
+
     },
 
 
@@ -76,6 +83,11 @@ export default {
            this.group = response.data
            this.statistic = response.data.get_group_stat
            this.getGroupEmployees(this.group.id)
+
+           this.$store.dispatch('change_group_id', this.group.id)
+
+
+
 
           })
           .catch(error => {

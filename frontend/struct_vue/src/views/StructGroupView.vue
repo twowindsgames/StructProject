@@ -1,5 +1,6 @@
 <template>
-  <q-scroll-area class="struct  " style="height: 100%; ">
+
+  <q-scroll-area v-if="can_build"   class="struct  " style="height: 100%; ">
     <q-list  v-for="group in groups" v-bind:key="group.id" >
       <recursive_tree
           @Delete="OnDelete"
@@ -35,12 +36,23 @@ export default {
   name: 'StructMenu',
   data() {
     return {
+      can_build: false,
       groups: [],
       modalOptions: {mode: 'режим', title: 'заголовок', group: Object},
       editTreeModalView: false
     }
   },
+  beforeCreate() { this.$store.subscribe((mutation) => {
+        if (mutation.type=="change_group_id")
+        {
+        this.can_build = true
+        }
+      })
+  },
+
   mounted() {
+
+
     this.getAllGroups()
 
   },
@@ -52,6 +64,7 @@ export default {
 
 
   },
+
   methods: {
 
     getAllGroups() {
@@ -59,6 +72,7 @@ export default {
           .get('/api/group/all/')
           .then(response => {
             this.groups = response.data
+
           })
           .catch(error => {
             console.log(error)

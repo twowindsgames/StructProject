@@ -1,5 +1,5 @@
 <template>
-
+<q-btn color="primary" label="Persistent Menu">
       <q-menu v-if="!root" transition-duration="0"
         touch-position
         context-menu>
@@ -60,6 +60,7 @@
           </q-item>
         </q-list>
       </q-menu>
+   </q-btn>
 </template>
 
 <script>
