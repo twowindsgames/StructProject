@@ -1,33 +1,28 @@
 <template>
   <div>
-       <context_menu
+    <context_menu
             @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
             :group="group"
             :readyToDelete="checkToDelete()"
             :root=false />
-
-
         <q-item :class="[checkToDelete() ? 'bg-red-2 ' :  '']"
                 :to="'/structure' + group.get_absolute_url"
                 :inset-level="depth"
                 :hide-expand-icon="group.is_leaf_node"
                 clickable>
 
-                        <div name="arrow" class="q-pa-none q-ma-none div1"  v-if="!group.is_leaf_node">
-                           <q-icon v-if="isShow" name="arrow_drop_down"  size="2em" @click="toggleChildren">  </q-icon>
-                           <q-icon v-else name="arrow_right" size="2em" @click="toggleChildren">  </q-icon>
-                        </div>
-                        <div class="q-pa-none  q-ma-none div1 ">
-                          <em style="flex-wrap: wrap"> {{group.full_title}}  </em>
-                          <i v-if="checkToDelete()"> (подтвердите)</i>
-                        </div>
-
-
-
+                <div name="arrow" class="q-pa-none q-ma-none div1"  v-if="!group.is_leaf_node">
+                   <q-icon v-if="isShow" name="arrow_drop_down"  size="2em" @click="toggleChildren">  </q-icon>
+                   <q-icon v-else name="arrow_right" size="2em" @click="toggleChildren">  </q-icon>
+                </div>
+                <div class="q-pa-none  q-ma-none div1 ">
+                  <em style="flex-wrap: wrap"> {{group.full_title}} </em>
+                  <i v-if="checkToDelete()"> (подтвердите)</i>
+                </div>
 
         </q-item>
 
-        <div  v-show="isShow" transition-show="fade"  >
+        <div  v-if="isShow" transition-show="fade"  >
           <recursive_tree
           v-for="group in group.children"
           v-bind:key="group.id"
@@ -35,10 +30,11 @@
             :group="group"
             :depth="depth + 1"
             :isParentReadyToDelete="checkToDelete()"
-            :root="rootListener">
+            :root="rootListener"
+            :path="path">
           </recursive_tree>
 
-</div>
+        </div>
 
 
   </div>
@@ -47,21 +43,16 @@
   import context_menu from './context_menu.vue'
 
   export default {
-    props: ['group',  'depth', 'clickToDelete', 'isParentReadyToDelete', 'root' ],
+    props: ['group',  'depth', 'clickToDelete', 'isParentReadyToDelete', 'root', 'path'],
     name: 'recursive_tree',
     data() {
       return {
         isShow: false,
-        canBuild: false,
         isReadyToDelete: false,
         rootListener: null,
-        current_group_id: this.$store.getters.get_group_id
+
     }
     },
-
-
-
-
     mounted() {
 
       if (this.root == null){
@@ -70,9 +61,12 @@
       else {
          this.rootListener = this.root
       }
-       if (this.$store.getters.get_group_id==this.group.id){
-            this.$emit('OpenChildren')
-       }
+      if (this.path[this.depth]==this.group.slug && this.path[this.path.length-1]!=this.group.slug){
+        this.isShow=true
+      }
+
+
+
 
 
 
@@ -99,8 +93,6 @@
         this.isShow = true;
         this.$emit('OpenChildren')
       },
-
-
 
       onReadyDelete() {
         this.isReadyToDelete = !this.isReadyToDelete

@@ -1,5 +1,5 @@
 <template>
-<q-btn color="primary" label="Persistent Menu">
+
       <q-menu v-if="!root" transition-duration="0"
         touch-position
         context-menu>
@@ -12,7 +12,7 @@
           <q-item v-show="readyToDelete" clickable v-close-popup >
             <q-item-section @click="$emit('ReadyDelete')"> Отменить удаление</q-item-section>
           </q-item>
-          <q-item  v-show="!readyToDelete" clickable  v-close-popup  @click="OpenMenu" >
+          <q-item  v-show="!readyToDelete" clickable  v-close-popup  >
             <q-item-section  @click="$emit('ReadyDelete')"  >Удалить</q-item-section>
           </q-item>
 
@@ -60,7 +60,7 @@
           </q-item>
         </q-list>
       </q-menu>
-   </q-btn>
+
 </template>
 
 <script>

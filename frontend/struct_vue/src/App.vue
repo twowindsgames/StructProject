@@ -18,6 +18,7 @@
    <q-drawer show-if-above  style="height: 100%; width: 300px" class="bg-indigo-1"  v-model="leftDrawerOpen"  :width="350"  behavior="desktop" side="left" bordered>
           <router-view name="struct"/>
    </q-drawer>
+
        <q-page-container>
        <section class="section">
          <q-page><router-view name="info" :key="$route.path" /></q-page>

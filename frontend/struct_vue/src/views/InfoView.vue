@@ -77,6 +77,7 @@ export default {
 
     getGroupDetailInfo() {
       const tree_hierarchy = this.$route.params.tree_hierarchy
+
       axios
           .get(`/api/group/${tree_hierarchy}`)
           .then(response => {
@@ -84,7 +85,7 @@ export default {
            this.statistic = response.data.get_group_stat
            this.getGroupEmployees(this.group.id)
 
-           this.$store.dispatch('change_group_id', this.group.id)
+
 
 
 

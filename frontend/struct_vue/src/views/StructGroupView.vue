@@ -1,10 +1,11 @@
 <template>
 
-  <q-scroll-area v-if="can_build"   class="struct  " style="height: 100%; ">
+  <q-scroll-area  class="struct  " style="height: 100%; ">
     <q-list  v-for="group in groups" v-bind:key="group.id" >
       <recursive_tree
           @Delete="OnDelete"
           @ShowEditTree="OnShowEditTree"
+          :path="path"
           :group="group"
           :depth="0">
       </recursive_tree>
@@ -34,21 +35,18 @@ import context_menu from '../components/context_menu.vue'
 
 export default {
   name: 'StructMenu',
+
   data() {
     return {
       can_build: false,
       groups: [],
       modalOptions: {mode: 'режим', title: 'заголовок', group: Object},
-      editTreeModalView: false
+      editTreeModalView: false,
+      path: []
     }
   },
-  beforeCreate() { this.$store.subscribe((mutation) => {
-        if (mutation.type=="change_group_id")
-        {
-        this.can_build = true
-        }
-      })
-  },
+
+
 
   mounted() {
 
@@ -68,6 +66,8 @@ export default {
   methods: {
 
     getAllGroups() {
+       this.path  =  this.$route.params.tree_hierarchy.split('/')
+
       axios
           .get('/api/group/all/')
           .then(response => {

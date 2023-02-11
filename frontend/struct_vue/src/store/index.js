@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    group_id: 0
+    path: []
   },
   getters: {
      get_group_id(state){
@@ -10,13 +10,13 @@ export default createStore({
         }
   },
   mutations: {
-      change_group_id(state, id){
-            state.group_id = id
+      change_group_id(state, tree_hierarchy){
+            state.path = tree_hierarchy
         }
   },
   actions: {
-       change_group_id (context, id) {
-      context.commit('change_group_id',id)
+       change_group_id (context, tree_hierarchy) {
+      context.commit('change_group_id',tree_hierarchy)
     },
 
   },
