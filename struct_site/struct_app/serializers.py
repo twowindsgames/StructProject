@@ -54,6 +54,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
             "get_age",
             "image_url",
             "image",
+
         )
 
     def get_image_url(self, obj):

@@ -67,6 +67,7 @@ export default {
        this.getGroupDetailInfo()
     },
 
+
     getGroupDetailInfo() {
       const tree_hierarchy = this.$route.params.tree_hierarchy
       axios

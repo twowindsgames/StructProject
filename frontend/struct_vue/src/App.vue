@@ -13,10 +13,8 @@
       </q-toolbar>
     </q-header>
 
-   <q-drawer show-if-above style="height: 100%" class="bg-indigo-3"  v-model="leftDrawerOpen"  :width="350" behavior="desktop" side="left" bordered>
-     <q-list style="height: 100%">
+   <q-drawer show-if-above  style="height: 100%; width: 300px" class="bg-indigo-1"  v-model="leftDrawerOpen"  :width="350"  behavior="desktop" side="left" bordered>
           <router-view name="struct"/>
-      </q-list>
    </q-drawer>
 
     <q-page-container>
