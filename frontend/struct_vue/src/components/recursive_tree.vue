@@ -2,7 +2,7 @@
   <div>
 
 
-        <q-item :class="[checkToDelete() ? 'bg-red-2 ' :  '']"
+        <q-item
                  clickable
                 :inset-level="depth"
                 :hide-expand-icon="group.is_leaf_node"
@@ -16,15 +16,15 @@
                 </div>
                 <div class="q-pa-none  q-ma-none div1 ">
                   <em style="flex-wrap: wrap"> {{group.full_title}} </em>
-                  <i v-if="checkToDelete()"> (подтвердите)</i>
+
                 </div>
             </router-link>
 
                 <q-btn  icon="edit" size="5px"  v-show="hover_edit"  >
                                 <context_menu
-                                @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
+                                @ReadyDelete="OnReadyDelete()"  @ShowEditTree="OnShowEditTree"
                                 :group="group"
-                                :readyToDelete="checkToDelete()"
+
                                 :root=false />
                 </q-btn>
 
@@ -37,10 +37,10 @@
           <recursive_tree
           v-for="group in group.children"
           v-bind:key="group.id"
-            @Delete="OnDelete" @ShowEditTree="OnShowEditTree" @OpenChildren="OnOpenChildren"
+            @ReadyDelete="OnReadyDelete" @ShowEditTree="OnShowEditTree" @OpenChildren="OnOpenChildren"
             :group="group"
             :depth="depth + 1"
-            :isParentReadyToDelete="checkToDelete()"
+
             :root="rootListener"
             :path="path">
           </recursive_tree>
@@ -54,7 +54,7 @@
   import context_menu from './context_menu.vue'
 
   export default {
-    props: ['group',  'depth', 'clickToDelete', 'isParentReadyToDelete', 'root', 'path'],
+    props: ['group',  'depth',   'root', 'path'],
     name: 'recursive_tree',
     data() {
       return {
@@ -106,18 +106,14 @@
         this.$emit('OpenChildren')
       },
 
-      onReadyDelete() {
-        this.isReadyToDelete = !this.isReadyToDelete
+      OnReadyDelete() {
+          this.rootListener.$emit('ReadyDelete', this.group)
       },
-      OnDelete() {
-         this.rootListener.$emit('Delete', this.group.id)
-      },
+
       OnShowEditTree(mode) {
          this.rootListener.$emit('ShowEditTree', mode, this.group)
       },
-      checkToDelete(){
-          return (this.isReadyToDelete || this.isParentReadyToDelete)
-      }
+
 
  },
  }

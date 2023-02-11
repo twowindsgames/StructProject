@@ -3,7 +3,7 @@
   <q-scroll-area  class="struct  " style="height: 100%; ">
     <q-list  v-for="group in groups" v-bind:key="group.id" >
       <recursive_tree
-          @Delete="OnDelete"
+          @ReadyDelete="OnShowDeleteTree"
           @ShowEditTree="OnShowEditTree"
           :path="path"
           :group="group"
@@ -11,13 +11,22 @@
       </recursive_tree>
     </q-list>
 
-      <div name="no-node-zone" style="height: 100%" >
-          <context_menu :root=true @ShowEditTree="OnShowEditTree"/>
-      </div>
+
 
       <modal_menu v-model="editTreeModalView" :title="modalOptions.title">
         <post_form @DataPost="OnDataPost" :mode="modalOptions.mode" :current_data=modalOptions.group ></post_form>
       </modal_menu>
+
+       <modal_menu v-model="deleteTreeModalView" :title="modalOptions.title">
+        <delete_form @Delete="OnDelete" :mode="modalOptions.mode" :group=modalOptions.group ></delete_form>
+      </modal_menu>
+
+
+
+
+        <q-page-sticky   position="bottom-right" style="margin-right: 30px" >
+                <q-btn @click="OnShowEditTree('add node',null)" round color="indigo" icon="add" ></q-btn>
+        </q-page-sticky>
 
   </q-scroll-area>
 
@@ -31,7 +40,7 @@ import recursive_tree from '../components/recursive_tree.vue'
 import modal_menu from '../components/modal_menu.vue'
 
 import post_form from '../components/post_form.vue'
-import context_menu from '../components/context_menu.vue'
+import delete_form from '../components/delete_form.vue'
 
 export default {
   name: 'StructMenu',
@@ -42,6 +51,7 @@ export default {
       groups: [],
       modalOptions: {mode: 'режим', title: 'заголовок', group: Object},
       editTreeModalView: false,
+      deleteTreeModalView: false,
       path: []
     }
   },
@@ -58,7 +68,7 @@ export default {
     post_form,
     recursive_tree,
     modal_menu,
-    context_menu,
+    delete_form
 
 
   },
@@ -81,11 +91,18 @@ export default {
     OnShowEditTree(mode,group) {
     this.modalOptions.mode = mode
     this.modalOptions.group = group
-    if (mode==="edit")  this.modalOptions.title = "Изменить информацию о подразделении"
+    if (mode==="edit node")  this.modalOptions.title = "Изменить информацию о подразделении"
     else  this.modalOptions.title = "Добавить подразделение"
     this.editTreeModalView=true
     },
-        OnDelete(id){
+
+    OnShowDeleteTree(group) {
+    this.modalOptions.mode = "delete node"
+    this.modalOptions.group = group
+    this.modalOptions.title = "Удалить подразделение"
+    this.deleteTreeModalView=true
+    },
+    OnDelete(id){
      axios.delete('api/group/', {params: {group_id: id},}).then(response => {
         this.getAllGroups()
               console.log(response)})
