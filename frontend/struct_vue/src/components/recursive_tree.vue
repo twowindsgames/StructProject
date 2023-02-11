@@ -1,16 +1,15 @@
 <template>
   <div>
-    <context_menu
-            @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
-            :group="group"
-            :readyToDelete="checkToDelete()"
-            :root=false />
+
+
         <q-item :class="[checkToDelete() ? 'bg-red-2 ' :  '']"
-                :to="'/structure' + group.get_absolute_url"
+                 clickable
                 :inset-level="depth"
                 :hide-expand-icon="group.is_leaf_node"
-                clickable>
-
+                 @mouseenter="hover_edit = true"
+                 @mouseleave="hover_edit = false"
+        >
+          <router-link :to="'/structure' + group.get_absolute_url">
                 <div name="arrow" class="q-pa-none q-ma-none div1"  v-if="!group.is_leaf_node">
                    <q-icon v-if="isShow" name="arrow_drop_down"  size="2em" @click="toggleChildren">  </q-icon>
                    <q-icon v-else name="arrow_right" size="2em" @click="toggleChildren">  </q-icon>
@@ -19,6 +18,18 @@
                   <em style="flex-wrap: wrap"> {{group.full_title}} </em>
                   <i v-if="checkToDelete()"> (подтвердите)</i>
                 </div>
+            </router-link>
+
+                <q-btn  icon="edit" size="5px"  v-show="hover_edit"  >
+                                <context_menu
+                                @ReadyDelete="onReadyDelete()" @Delete="OnDelete" @ShowEditTree="OnShowEditTree"
+                                :group="group"
+                                :readyToDelete="checkToDelete()"
+                                :root=false />
+                </q-btn>
+
+             <router-link top side :to="'/structure' + group.get_absolute_url" style="flex: max-content" >
+             </router-link>
 
         </q-item>
 
@@ -50,6 +61,7 @@
         isShow: false,
         isReadyToDelete: false,
         rootListener: null,
+        hover_edit: false
 
     }
     },

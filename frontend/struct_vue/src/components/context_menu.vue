@@ -1,8 +1,8 @@
 <template>
 
-      <q-menu v-if="!root" transition-duration="0"
+      <q-menu  v-if="!root" transition-duration="0"
         touch-position
-        context-menu>
+        >
 
         <q-list  dense style="min-width: 100px">
 
@@ -37,11 +37,6 @@
           </q-item>
 
           <q-separator />
-
-          <q-item clickable v-close-popup>
-            <q-item-section>Закрыть</q-item-section>
-          </q-item>
-
         </q-list>
       </q-menu>
 
@@ -60,6 +55,7 @@
           </q-item>
         </q-list>
       </q-menu>
+
 
 </template>
 
