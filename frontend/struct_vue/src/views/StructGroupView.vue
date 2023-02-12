@@ -41,6 +41,7 @@ import modal_menu from '../components/modal_menu.vue'
 
 import post_form from '../components/post_form.vue'
 import delete_form from '../components/delete_form.vue'
+import notify_manager from "@/components/notify_manager";
 
 
 
@@ -90,7 +91,7 @@ export default {
 
           })
           .catch(error => {
-            console.log(error)
+            notify_manager.methods.PushErrorNotify(error)
           })
     },
     OnShowEditTree(mode,group) {
@@ -108,10 +109,11 @@ export default {
     this.deleteTreeModalView=true
     },
     OnDelete(id){
-     axios.delete('api/group/', {params: {group_id: id},}).then(response => {
-        this.getAllGroups()
-              console.log(response)})
-                .catch(error => {console.log(error)})
+    axios.delete('api/group/', {params: {group_id: id},}).then(response =>
+    {
+        notify_manager.methods.PushResponceNotify(response)
+        this.getAllGroups()})
+        .catch(error => {notify_manager.methods.PushErrorNotify(error)})
     },
     OnDataPost(post_data){
 
@@ -119,9 +121,9 @@ export default {
      if (this.modalOptions.mode==="add node")  request = axios.post('api/group/', post_data)
      if (this.modalOptions.mode==="edit node") request = axios.put('api/group/', post_data)
      request.then(response => {
-        this.getAllGroups()
-              console.log(response)})
-                .catch(error => {console.log(error)})
+        notify_manager.methods.PushResponceNotify(response)
+        this.getAllGroups()})
+        .catch(error => {notify_manager.methods.PushPostErrorNotify(error)})
     },
   }
 }

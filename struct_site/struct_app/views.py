@@ -39,10 +39,16 @@ class GroupDetailView(APIView):
         group_id = request.query_params.get('group_id', None)
         group = self.GetGroup(group_id, tree_hierarchy)
         group.delete()
-        if Group.objects.filter(id=group_id) is None:
-            return Response("Delete Successfully")
+        if Group.objects.filter(id=group_id).count() == 0:
+            return Response(
+                {'Успешно удалено'},
+                status=status.HTTP_200_OK
+            )
         else:
-            return Response("Delete Error")
+            return Response(
+                {'Ошибка удаления'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
     def GetGroup( self, group_id, tree_hierarchy ):
         try:
@@ -87,10 +93,16 @@ class EmployeeListView(APIView):
         employee_id = request.query_params.get('id', None)
         employee = self.GetEmployee(employee_id)
         employee.delete()
-        if Group.objects.filter(id=employee_id) is None:
-            return Response("Delete Successfully")
+        if Employee.objects.filter(id=employee_id).count() == 0:
+            return Response(
+                {'Успешно удалено'},
+                status=status.HTTP_200_OK
+            )
         else:
-            return Response("Delete Error")
+            return Response(
+                {'Ошибка удаления'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
     def CheckImage( self, query ):
         if query[ 'image' ] == 'default':
@@ -116,7 +128,7 @@ class EmployeeListView(APIView):
 def SaveData( serialize_data ):
     if serialize_data.is_valid():
         serialize_data.save()
-        return Response("Успешно", status=status.HTTP_200_OK)
+        return Response("Данные сохранены", status=status.HTTP_200_OK)
     else:
         return Response(
             serialize_data.errors,

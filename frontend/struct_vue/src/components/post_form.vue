@@ -149,6 +149,9 @@ export default {
           && this.post_data_employee.employee_post
           && this.post_data_employee.date_of_joining
           && this.post_data_employee.birthday_date
+          ||
+           this.post_data_node.title
+           && this.post_data_node.full_title
           )
       {
         this.validate = true

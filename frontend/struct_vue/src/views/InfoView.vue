@@ -43,7 +43,9 @@ import axios from 'axios'
 import employees_card from "../components/employees_card";
 import modal_menu from '../components/modal_menu.vue'
 import post_form from '../components/post_form.vue'
-import {Notify} from "quasar";
+import notify_manager from '../components/notify_manager.vue'
+
+
 
 export default {
   name: 'GroupInfo',
@@ -86,14 +88,9 @@ export default {
            this.statistic = response.data.get_group_stat
            this.getGroupEmployees(this.group.id)
 
-
-
-
-
-
           })
           .catch(error => {
-            console.log(error)
+            notify_manager.methods.PushErrorNotify(error)
           })
     },
 
@@ -104,7 +101,7 @@ export default {
           this.employees = response.data
         })
         .catch(error => {
-          console.log(error)
+         notify_manager.methods.PushErrorNotify(error)
         })
 
   },
@@ -119,26 +116,21 @@ export default {
     },
      OnDataPost(post_data){
      let request
-
      if (this.editOptions.mode==="add employee")request=axios.post('api/employees', post_data,{headers: {"Content-Type": "multipart/form-data"}})
      if (this.editOptions.mode==="edit employee")request= axios.put('api/employees', post_data,{headers: {"Content-Type": "multipart/form-data"}})
-       request.then(response => {
-              this.updateInfo()
-               Notify.create({message: response.data, color: 'positive', position: 'top'})
-              console.log(response)})
-                .catch(error => {
-                  let message_details = Object.keys(error.response.data).toString()
-                  if (message_details) message_details = " ошибка в: " +message_details
-                  Notify.create({message: error.code +  message_details, color: 'negative', position: 'top'})
-                  console.log(error)
-                })
+         request.then(response => {
+        notify_manager.methods.PushResponceNotify(response)
+        this.updateInfo()})
+        .catch(error => {notify_manager.methods.PushPostErrorNotify(error)})
 
     },
      OnDelete(id){
-     axios.delete('/api/employees', {params: {id: id}}).then(response => {
-       this.updateInfo()
-              console.log(response)})
-                .catch(error => {console.log(error)})
+
+         axios.delete('/api/employees', {params: {id: id}})
+        .then(response => {
+        notify_manager.methods.PushResponceNotify(response)
+        this.updateInfo()})
+        .catch(error => {notify_manager.methods.PushErrorNotify(error)})
     },
 },
 }
