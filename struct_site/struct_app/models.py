@@ -4,8 +4,8 @@ from datetime import date
 
 
 class Group(MPTTModel):
-    title = models.CharField(max_length=20, verbose_name='Краткое наименование')
-    full_title = models.CharField(max_length=100, verbose_name='Полное наименование')
+    title = models.CharField(max_length=20, verbose_name='Краткое наименование', blank=True)
+    full_title = models.CharField(max_length=100, verbose_name='Полное наименование', blank=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name='Вышестоящее подразделение')
     slug = models.SlugField()
@@ -44,8 +44,10 @@ class Group(MPTTModel):
 
 
 class Employee(models.Model):
-    employee_name = models.CharField(max_length=50, verbose_name='ФИО сотрудника')
-    employee_post = models.CharField(max_length=50, verbose_name='Должность')
+    employee_name = models.CharField(max_length=50, verbose_name='Имя сотрудника', blank=True)
+    last_name = models.CharField(max_length=50, verbose_name='Фамилия сотрудника', blank=True)
+    patronymic = models.CharField(max_length=50, verbose_name='Отчество сотрудника', blank=True)
+    employee_post = models.CharField(max_length=50, verbose_name='Должность', blank=True)
     date_of_joining = models.DateField(auto_now=False,  blank=True)
     birthday_date = models.DateField(auto_now=False,   blank=True)
     slug = models.SlugField(max_length=150, null=True)
