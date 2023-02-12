@@ -42,6 +42,9 @@ import modal_menu from '../components/modal_menu.vue'
 import post_form from '../components/post_form.vue'
 import delete_form from '../components/delete_form.vue'
 
+
+
+
 export default {
   name: 'StructMenu',
 
@@ -65,10 +68,12 @@ export default {
 
   },
   components:{
+
     post_form,
     recursive_tree,
     modal_menu,
-    delete_form
+    delete_form,
+
 
 
   },

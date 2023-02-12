@@ -46,8 +46,8 @@ class Group(MPTTModel):
 class Employee(models.Model):
     employee_name = models.CharField(max_length=50, verbose_name='ФИО сотрудника')
     employee_post = models.CharField(max_length=50, verbose_name='Должность')
-    date_of_joining = models.DateField()
-    birthday_date = models.DateField(auto_now=False, null=True, blank=True)
+    date_of_joining = models.DateField(auto_now=False,  blank=True)
+    birthday_date = models.DateField(auto_now=False,   blank=True)
     slug = models.SlugField(max_length=150, null=True)
     group = TreeForeignKey('Group', on_delete=models.CASCADE, related_name='employees', verbose_name='Подразделение')
     image = models.ImageField(upload_to='employee_photos/', blank=True, null=True,

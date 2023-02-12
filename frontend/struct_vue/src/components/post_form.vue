@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md">
-    <div class="q-gutter-y-md column post-form"  >
+    <form @input="checkForm"  class="q-gutter-y-md column post-form"  >
 
       <div v-if="mode==='edit node' || mode==='add node'">
         <div>Название подразделения (полное)</div>
@@ -20,7 +20,7 @@
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="post_data_employee.birthday_date" v-close-popup mask="YYYY-MM-DD">
+              <q-date v-model="post_data_employee.birthday_date" v-close-popup @click="checkForm()"  mask="YYYY-MM-DD">
 
               </q-date>
             </q-popup-proxy>
@@ -28,12 +28,11 @@
         </template>
     </q-input>
 <div>Дата начала работы</div>
-    <q-input class="post-item" outlined v-model="post_data_employee.date_of_joining" placeholder="Установите дату начала работы"   >
-        <template v-slot:prepend>
+    <q-input class="post-item" outlined   v-model="post_data_employee.date_of_joining" placeholder="Установите дату начала работы"   >
+        <template v-slot:prepend >
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="post_data_employee.date_of_joining" v-close-popup mask="YYYY-MM-DD">
-
+              <q-date  v-model="post_data_employee.date_of_joining" v-close-popup @click="checkForm()"   mask="YYYY-MM-DD">
               </q-date>
             </q-popup-proxy>
           </q-icon>
@@ -45,7 +44,7 @@
          <q-file
       v-model="post_data_employee.image"
       @update:model-value="handleUpload()"
-      label="Добавьте фото сотрудника "
+      label="Добавьте фото сотрудника (необязательно)"
       filled
     />
 
@@ -54,11 +53,11 @@
        </div>
 
       <div>
-        <q-btn label="Применить"  color="primary" @click="PostData" v-close-popup/>
+        <q-btn label="Применить" :disable="!validate"  color="primary" @click="PostData" v-close-popup/>
       </div>
 
 
-    </div>
+    </form>
 
 
   </div>
@@ -77,8 +76,9 @@ export default {
   props: ['mode','current_data', 'group_id'],
   data () {
     return {
-      imageURL: '',
 
+      imageURL: '',
+      validate:false,
       post_data_node: {
         full_title: '',
         title: '',
@@ -98,6 +98,7 @@ export default {
 
     }
   },
+
 
 
   mounted() {
@@ -143,6 +144,21 @@ export default {
         this.imageURL = URL.createObjectURL( this.post_data_employee.image);
       }
     },
+    checkForm(){
+      if (this.post_data_employee.employee_name
+          && this.post_data_employee.employee_post
+          && this.post_data_employee.date_of_joining
+          && this.post_data_employee.birthday_date
+          )
+      {
+        this.validate = true
+      }
+      else
+      {
+        this.validate = false
+      }
+
+    }
 
 
   }

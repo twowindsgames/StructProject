@@ -7,6 +7,7 @@ class GroupSerializer(serializers.ModelSerializer):
     children = RecursiveField(many=True, )
 
     class Meta:
+
         model = Group
         fields = (
             "id",

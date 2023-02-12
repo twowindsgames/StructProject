@@ -43,6 +43,7 @@ import axios from 'axios'
 import employees_card from "../components/employees_card";
 import modal_menu from '../components/modal_menu.vue'
 import post_form from '../components/post_form.vue'
+import {Notify} from "quasar";
 
 export default {
   name: 'GroupInfo',
@@ -123,8 +124,14 @@ export default {
      if (this.editOptions.mode==="edit employee")request= axios.put('api/employees', post_data,{headers: {"Content-Type": "multipart/form-data"}})
        request.then(response => {
               this.updateInfo()
+               Notify.create({message: response.data, color: 'positive', position: 'top'})
               console.log(response)})
-                .catch(error => {console.log(error)})
+                .catch(error => {
+                  let message_details = Object.keys(error.response.data).toString()
+                  if (message_details) message_details = " ошибка в: " +message_details
+                  Notify.create({message: error.code +  message_details, color: 'negative', position: 'top'})
+                  console.log(error)
+                })
 
     },
      OnDelete(id){

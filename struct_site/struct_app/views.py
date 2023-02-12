@@ -2,15 +2,16 @@ from django.http import Http404
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status, viewsets
+from rest_framework.viewsets import ReadOnlyModelViewSet
+
 from .serializers import *
 from slugify import slugify
 
 
-class GroupListView(APIView):
-    def get( self, request ):
-        groups = Group.objects.root_nodes()
-        serializer = GroupSerializer(groups, many=True)
-        return Response(serializer.data)
+class GroupListView(ReadOnlyModelViewSet):
+    serializer_class = GroupSerializer
+    queryset = Group.objects.root_nodes()
 
 
 class GroupDetailView(APIView):
@@ -91,7 +92,7 @@ class EmployeeListView(APIView):
         else:
             return Response("Delete Error")
 
-    def CheckImage(self, query ):
+    def CheckImage( self, query ):
         if query[ 'image' ] == 'default':
             query = query.copy()
             del query[ 'image' ]
@@ -115,9 +116,9 @@ class EmployeeListView(APIView):
 def SaveData( serialize_data ):
     if serialize_data.is_valid():
         serialize_data.save()
-        return Response("Successfully")
+        return Response("Успешно", status=status.HTTP_200_OK)
     else:
-        return Response("Error")
-
-
-
+        return Response(
+            serialize_data.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
