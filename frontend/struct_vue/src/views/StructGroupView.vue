@@ -32,7 +32,7 @@ import ModalMenu from '../components/ModalMenu.vue'
 import PostForm from '../components/PostForm.vue'
 import DeleteForm from '../components/DeleteForm.vue'
 import NotifyManager from "../components/NotifyManager";
-
+import router from "../router";
 
 export default {
   name: 'StructMenu',
@@ -86,6 +86,7 @@ export default {
       axios.delete('api/group/', {params: {group_id: id},}).then(response => {
         NotifyManager.methods.pushResponceNotify(response)
         this.getAllGroups()
+        router.push({ path: '/' })
       })
           .catch(error => {
             NotifyManager.methods.pushErrorNotify(error)
