@@ -6,7 +6,10 @@
     </div>
 
     <q-card-section class="col-9 dense bordered padding unit ">
-      <q-item class="text-h4 text-center q-la-md ">{{ employee.name }}</q-item>
+      <q-item class="text-h4 text-center q-la-md ">
+        {{ employee.name }}
+        {{ employee.last_name }}
+        {{ employee.patronymic }} </q-item>
       <q-separator></q-separator>
       <q-item class="text-subtitle1 q-pa-md">Должность: {{ employee.post }}</q-item>
       <q-item class="text-subtitle1 q-pa-md">Дата начала работы: {{ employee.date_of_joining }}</q-item>

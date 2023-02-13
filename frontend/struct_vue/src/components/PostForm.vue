@@ -12,10 +12,16 @@
       </div>
 
       <div v-else>
-        <q-list>
+        <q-list >
 
-          <div>ФИО сотрудника</div>
-          <q-input class="post-item" outlined v-model="post_data_employee.name" placeholder="Введите ФИО"/>
+          <div>Фамилия </div>
+          <q-input  class="post-item" outlined v-model="post_data_employee.name" placeholder="Введите фамилию"/>
+
+          <div>Имя </div>
+          <q-input class="post-item" outlined v-model="post_data_employee.last_name" placeholder="Введите имя"/>
+
+          <div>Отчество </div>
+          <q-input class="post-item" outlined v-model="post_data_employee.patronymic" placeholder="Введите отчество"/>
 
           <div>Должность</div>
           <q-input class="post-item" outlined v-model="post_data_employee.post"
@@ -29,7 +35,7 @@
 
 
           <div>Фото сотрудника</div>
-          <q-img v-if="imageURL" style="height: 220px; width: 200px;" class="q-pa-md q-ma-md " :src="imageURL"/>
+          <q-img v-if="imageURL" style="height: 110px; width: 100px;" class="q-pa-md q-ma-md " :src="imageURL"/>
           <q-file
               v-model="post_data_employee.image"
               @update:model-value="handleUpload()"
@@ -71,6 +77,8 @@ export default {
       },
       post_data_employee: {
         name: '',
+        last_name: '',
+        patronymic: '',
         post: '',
         date_of_joining: '',
         birthday_date: '',
@@ -93,6 +101,8 @@ export default {
     }
     if (this.mode === 'edit employee') {
       this.post_data_employee.name = this.current_data.name
+      this.post_data_employee.last_name = this.current_data.last_name
+      this.post_data_employee.patronymic = this.current_data.patronymic
       this.post_data_employee.post = this.current_data.post
       this.post_data_employee.date_of_joining = this.current_data.date_of_joining
       this.post_data_employee.birthday_date = this.current_data.birthday_date
@@ -129,6 +139,8 @@ export default {
     },
     checkForm() {
       if (this.post_data_employee.name
+          &&this.post_data_employee.last_name
+          &&this.post_data_employee.patronymic
           && this.post_data_employee.post
           && this.post_data_employee.date_of_joining
           && this.post_data_employee.birthday_date
@@ -157,7 +169,7 @@ export default {
 
 .post-item
   margin-top: 0px
-  margin-bottom: 8px
+  margin-bottom: 3px
 
 .img
   border: dashed red

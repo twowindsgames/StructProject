@@ -12,7 +12,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above style="height: 100%; width: 350px; max-width: 350px; overflow-x: hidden " class="bg-indigo-1" v-model="leftDrawerOpen" :width="350"
+    <q-drawer show-if-above style="height: 100%; width: 360px; max-width: 350px; overflow-x: hidden " class="bg-indigo-1" v-model="leftDrawerOpen" :width="350"
               behavior="desktop" side="left" bordered>
       <router-view name="struct"/>
     </q-drawer>

@@ -16,6 +16,7 @@
                         style="flex-wrap: wrap;
                         color: #2a0e70;
                         text-decoration: #000000;"
+                        clickable
           >
             <em class="div1 q-pa-xs"> {{ group.full_title }} </em>
           </router-link>

@@ -23,7 +23,7 @@
     </div>
 
     <q-page-sticky position="right" style="margin-right: 30px">
-      <q-btn @click="onShowEmployeeEdit('add employee',null)" round color="green" icon="add"></q-btn>
+      <q-btn style="opacity: 0.9" @click="onShowEmployeeEdit('add employee',null)" round color="green" icon="add"></q-btn>
     </q-page-sticky>
   </div>
 

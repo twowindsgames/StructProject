@@ -4,12 +4,13 @@
           touch-position
   >
     <q-list dense style="min-width: 100px">
-      <q-item clickable v-close-popup @click="$emit('showEditTree','edit node')">
-        <q-item-section>Изменить информацию о подразделении</q-item-section>
-      </q-item>
 
       <q-item clickable v-close-popup @click="$emit('showEditTree','add node')">
         <q-item-section>Добавить подчиненное подразделение</q-item-section>
+      </q-item>
+
+      <q-item clickable v-close-popup @click="$emit('showEditTree','edit node')">
+        <q-item-section>Изменить информацию о подразделении</q-item-section>
       </q-item>
 
       <q-separator/>

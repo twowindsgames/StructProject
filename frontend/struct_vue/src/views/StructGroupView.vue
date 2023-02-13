@@ -1,5 +1,5 @@
 <template>
-  <div  class="struct  " style="height: 100%; ">
+  <div  class="struct  " style="height: 100%;width: 360px; overflow-x: hidden ">
     <div v-for="group in groups" v-bind:key="group.id" >
       <recursive-tree
           @readyDelete="onShowDeleteTree"
@@ -19,7 +19,7 @@
     </modal-menu>
 
     <q-page-sticky position="bottom-right" style="margin-right: 30px">
-      <q-btn @click="onShowEditTree('add node',null)" round color="indigo" icon="add"></q-btn>
+      <q-btn style="opacity: 0.85" @click="onShowEditTree('add node',null)" round color="indigo" icon="add"></q-btn>
     </q-page-sticky>
 
   </div>

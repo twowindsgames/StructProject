@@ -48,6 +48,8 @@ class EmployeeSerializer(serializers.ModelSerializer):
             "id",
             "group",
             "name",
+            "last_name",
+            "patronymic",
             "post",
             "date_of_joining",
             "birthday_date",
