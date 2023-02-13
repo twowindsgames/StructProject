@@ -2,7 +2,7 @@
   <q-card class="row unit-card bg-indigo-2 text-black rounded-borders">
 
     <div class="col-2 unit text-center" style="margin: auto">
-      <q-img class="q-pa-md q-ma-md" :src=employee.image_url style="height: 220px; width: 200px;  "/>
+      <q-img class="q-pa-md q-ma-md" :src=employee.image style="height: 220px; width: 200px;  "/>
     </div>
 
     <q-card-section class="col-9 dense bordered padding unit ">

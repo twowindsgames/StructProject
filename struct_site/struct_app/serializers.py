@@ -40,8 +40,6 @@ class GroupDetailSerializer(serializers.ModelSerializer):
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
-    image_url = serializers.SerializerMethodField('get_image_url')
-
     class Meta:
         model = Employee
         fields = (
@@ -53,12 +51,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
             "post",
             "date_of_joining",
             "birthday_date",
-            "image_url",
             "image",
-
         )
 
-    def get_image_url(self, obj):
-        request = self.context.get('request')
-        image_url = obj.image.url
-        return request.build_absolute_uri(image_url)
+
