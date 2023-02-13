@@ -4,17 +4,17 @@ import StructGroupView from '../views/StructGroupView.vue'
 import InfoView from '../views/InfoView.vue'
 const routes = [
   {
-    path: '/structure/:tree_hierarchy(.*)',
+    path: '/structure/:hierarchy(.*)',
     name: 'HomeView',
     components: {
       default: StructGroupView,
       info: InfoView,
-      struct: StructGroupView,
+      struct: StructGroupView,}
     },
-  },
-
-
-
+    {
+     path: '/',
+     redirect: '/structure/'
+    }
 ]
 
 const router = createRouter({

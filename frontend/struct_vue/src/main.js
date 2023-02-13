@@ -1,9 +1,9 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
-import { Quasar } from 'quasar'
+import {Quasar} from 'quasar'
 import quasarUserOptions from './quasar-user-options'
 
 axios.defaults.baseURL = 'http://127.0.0.1:8000'

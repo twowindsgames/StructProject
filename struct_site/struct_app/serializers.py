@@ -7,7 +7,6 @@ class GroupSerializer(serializers.ModelSerializer):
     children = RecursiveField(many=True, )
 
     class Meta:
-
         model = Group
         fields = (
             "id",
@@ -48,11 +47,10 @@ class EmployeeSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "group",
-            "employee_name",
-            "employee_post",
+            "name",
+            "post",
             "date_of_joining",
             "birthday_date",
-            "get_age",
             "image_url",
             "image",
 
@@ -62,4 +60,3 @@ class EmployeeSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         image_url = obj.image.url
         return request.build_absolute_uri(image_url)
-

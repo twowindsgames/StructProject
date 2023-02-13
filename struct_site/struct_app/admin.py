@@ -14,7 +14,7 @@ admin.site.register(Group, GroupAdmin)
 
 
 class EmployeeAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("employee_name",)}
+    prepopulated_fields = {"slug": ("name",)}
 
 
 admin.site.register(Employee, EmployeeAdmin)

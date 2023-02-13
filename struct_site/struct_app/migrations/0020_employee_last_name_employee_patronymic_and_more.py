@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='employee',
-            name='employee_name',
+            name='name',
             field=models.CharField(max_length=50, verbose_name='Имя сотрудника'),
         ),
     ]
