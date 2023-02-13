@@ -133,7 +133,6 @@ export default {
     handleUpload() {
 
       if (this.post_data_employee.image) {
-
         this.imageURL = URL.createObjectURL(this.post_data_employee.image);
       }
     },

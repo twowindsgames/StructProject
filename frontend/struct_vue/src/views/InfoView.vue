@@ -2,14 +2,17 @@
   <div class="info">
     <div class="row row-up  text-white">
       <div class="col-10 col-up bg-indigo-4 text-center ">
+        <p v-if="!isGroup"  class="text-h3 text-weight-bold q-pa-md">Подразделение не выбрано</p>
         <p class="text-h3 text-weight-bold">{{ group.full_title }}</p>
         <p class="text-weight-thin">{{ group.title }}</p>
       </div>
 
-      <div class="col col-up bg-indigo-3 text-italic q-pa-xs 	">
-        <p>Сотрудников: {{ statistic['employees_count'] }} ч.</p>
-        <p>Средний возраст: {{ statistic['aver_age'] }} г.</p>
-        <p>Средний стаж: {{ statistic['aver_exp'] }} г.</p>
+      <div  class="col col-up bg-indigo-3 text-italic q-pa-xs 	">
+        <div v-if="isGroup">
+          <p>Сотрудников: {{ statistic['employees_count'] }} ч.</p>
+          <p>Средний возраст: {{ statistic['aver_age'] }} г.</p>
+          <p>Средний стаж: {{ statistic['aver_exp'] }} г.</p>
+        </div>
       </div>
     </div>
 
@@ -22,7 +25,7 @@
       </div>
     </div>
 
-    <q-page-sticky position="right" style="margin-right: 30px">
+    <q-page-sticky v-show="isGroup" position="right" style="margin-right: 30px">
       <q-btn style="opacity: 0.9" @click="onShowEmployeeEdit('add employee',null)" round color="green" icon="add"></q-btn>
     </q-page-sticky>
   </div>
@@ -58,7 +61,8 @@ export default {
       employees: [],
       editOptions: {mode: 'режим', title: 'заголовок', employee: null},
       editEmployeeModalView: false,
-      statistic: ''
+      statistic: '',
+      isGroup: false,
     }
   },
   mounted() {
@@ -74,7 +78,13 @@ export default {
 
     getGroupDetailInfo() {
       const hierarchy = this.$route.params.hierarchy
-      if (hierarchy==0) return;
+      if (hierarchy=='') {
+        this.isGroup = false
+        return;
+      }
+      else {
+         this.isGroup = true
+      }
       axios
           .get(`/api/group/${hierarchy}`)
           .then(response => {
