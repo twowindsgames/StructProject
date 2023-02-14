@@ -8,7 +8,7 @@
         @mouseleave="hover_edit = false"
         active-class="menu-link"
         @click= "onLinkSet"
-        :active="link === group.full_title"
+        :active="link === group.id"
     >
         <div name="arrow" class="div1 " v-if="!group.is_leaf_node">
           <q-icon v-if="isShow" name="arrow_drop_down" size="2em" @click="toggleChildren"></q-icon>
@@ -100,7 +100,7 @@ export default {
       this.rootListener.$emit('showEditTree', mode, this.group)
     },
     onLinkSet() {
-      this.rootListener.$emit('setLink', this.group.full_title)
+      this.rootListener.$emit('setLink', this.group.id)
     },
   },
 }
