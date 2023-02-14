@@ -2,7 +2,6 @@
   <div name="recursive-tree" class="q-pa-none q-ma-xs-none">
     <q-item
         clickable
-        v-ripple
         :inset-level="depth"
         :hide-expand-icon="group.is_leaf_node"
         @mouseenter="hover_edit = true"
