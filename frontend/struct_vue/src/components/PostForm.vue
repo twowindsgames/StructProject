@@ -12,15 +12,15 @@
       </div>
 
       <div v-else>
-        <q-list >
+        <q-list>
 
-          <div>Фамилия </div>
-          <q-input  class="post-item" outlined v-model="post_data_employee.name" placeholder="Введите фамилию"/>
+          <div>Фамилия</div>
+          <q-input class="post-item" outlined v-model="post_data_employee.name" placeholder="Введите фамилию"/>
 
-          <div>Имя </div>
+          <div>Имя</div>
           <q-input class="post-item" outlined v-model="post_data_employee.last_name" placeholder="Введите имя"/>
 
-          <div>Отчество </div>
+          <div>Отчество</div>
           <q-input class="post-item" outlined v-model="post_data_employee.patronymic" placeholder="Введите отчество"/>
 
           <div>Должность</div>
@@ -28,17 +28,17 @@
                    placeholder="Введите должность"/>
 
           <div>Дата рождения</div>
-          <q-input v-model="post_data_employee.birthday_date" outlined type="date"  />
+          <q-input v-model="post_data_employee.birthday_date" outlined type="date" mask="##/##/####" unmasked-value/>
 
           <div>Дата начала работы</div>
-          <q-input v-model="post_data_employee.date_of_joining"  outlined  type="date"  />
+          <q-input v-model="post_data_employee.date_of_joining" outlined type="date"/>
 
 
           <div>Фото сотрудника</div>
           <q-img v-if="imageURL" style="height: 110px; width: 100px;" class="q-pa-md q-ma-md " :src="imageURL"/>
           <q-file
               v-model="post_data_employee.image"
-              @update:model-value="handleUpload()"
+              @update:model-value="onPreview()"
               label="Добавьте фото сотрудника (необязательно)"
               filled
           />
@@ -114,10 +114,14 @@ export default {
 
   methods: {
     postData() {
-      if (this.mode.includes('node')) {
-        if (this.current_data == null) {
+      if (this.mode.includes('node'))
+      {
+        if (this.current_data == null)
+        {
           this.post_data_node.parent = ''
-        } else {
+        }
+        else
+        {
           if (this.mode.includes('edit'))
             this.post_data_node.parent = this.current_data.parent
           else
@@ -125,30 +129,33 @@ export default {
         }
         this.$emit('dataPost', this.post_data_node)
 
-      } else {
+      }
+      else {
         this.post_data_employee.group = this.group_id
         this.$emit('dataPost', this.post_data_employee)
       }
     },
-    handleUpload() {
-
+    onPreview() {
       if (this.post_data_employee.image) {
         this.imageURL = URL.createObjectURL(this.post_data_employee.image);
       }
     },
     checkForm() {
       if (this.post_data_employee.name
-          &&this.post_data_employee.last_name
-          &&this.post_data_employee.patronymic
+          && this.post_data_employee.last_name
+          && this.post_data_employee.patronymic
           && this.post_data_employee.post
           && this.post_data_employee.date_of_joining
           && this.post_data_employee.birthday_date
           ||
           this.post_data_node.title
           && this.post_data_node.full_title
-      ) {
+      )
+      {
         this.validate = true
-      } else {
+      }
+      else
+      {
         this.validate = false
       }
 
