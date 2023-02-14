@@ -28,10 +28,11 @@
                    placeholder="Введите должность"/>
 
           <div>Дата рождения</div>
-          <q-input v-model="post_data_employee.birthday_date" outlined type="date" mask="##/##/####" unmasked-value/>
+          <q-input v-model="post_data_employee.birthday_date" outlined type="date"/>
 
           <div>Дата начала работы</div>
           <q-input v-model="post_data_employee.date_of_joining" outlined type="date"/>
+
 
 
           <div>Фото сотрудника</div>
@@ -59,6 +60,7 @@
 </template>
 
 <script>
+
 
 
 export default {
