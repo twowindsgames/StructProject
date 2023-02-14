@@ -2,10 +2,14 @@
   <div name="recursive-tree" class="q-pa-none q-ma-xs-none">
     <q-item
         clickable
+        v-ripple
         :inset-level="depth"
         :hide-expand-icon="group.is_leaf_node"
         @mouseenter="hover_edit = true"
         @mouseleave="hover_edit = false"
+        active-class="menu-link"
+        @click= "onLinkSet"
+        :active="link === group.full_title"
     >
         <div name="arrow" class="div1 " v-if="!group.is_leaf_node">
           <q-icon v-if="isShow" name="arrow_drop_down" size="2em" @click="toggleChildren"></q-icon>
@@ -31,8 +35,6 @@
         />
       </q-icon>
         </div>
-
-
       <router-link top side :to="'/structure' + group.get_absolute_url" style="flex: max-content"/>
     </q-item>
 
@@ -43,7 +45,9 @@
           :group="group"
           :depth="depth + 1"
           :root="rootListener"
-          :path="path">
+          :path="path"
+          :link="link"
+           >
       </recursive-tree>
 
     </div>
@@ -53,14 +57,15 @@
 import ContextMenu from './ContextMenu.vue'
 
 export default {
-  props: ['group', 'depth', 'root', 'path'],
+  props: ['group', 'depth', 'root', 'path', 'link'],
   name: 'RecursiveTree',
   data() {
     return {
       isShow: false,
       isReadyToDelete: false,
       rootListener: null,
-      hover_edit: false
+      hover_edit: false,
+
 
     }
   },
@@ -95,10 +100,16 @@ export default {
     onShowEditTree(mode) {
       this.rootListener.$emit('showEditTree', mode, this.group)
     },
+    onLinkSet() {
+      this.rootListener.$emit('setLink', this.group.full_title)
+    },
   },
 }
 </script>
 <style lang="sass" scoped>
 .div1
   display: inline-block
+.menu-link
+  color: rgba(0, 0, 0, 0.97)
+  background: rgba(149, 154, 248, 0.45)
 </style>

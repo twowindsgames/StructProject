@@ -1,14 +1,16 @@
 <template>
   <div  class="struct  " style="height: 100%;width: 360px; overflow-x: hidden ">
-    <div v-for="group in groups" v-bind:key="group.id" >
+    <q-list v-for="group in groups" v-bind:key="group.id" >
       <recursive-tree
           @readyDelete="onShowDeleteTree"
           @showEditTree="onShowEditTree"
+          @setLink="onLinkUpdate"
           :path="path"
           :group="group"
-          :depth="0">
+          :depth="0"
+          :link = link>
       </recursive-tree>
-    </div>
+    </q-list>
 
     <modal-menu v-model="editTreeModalView" :title="modalOptions.title">
       <post-form @dataPost="onDataPost" :mode="modalOptions.mode" :current_data=modalOptions.group></post-form>
@@ -43,7 +45,8 @@ export default {
       modalOptions: {mode: 'режим', title: 'заголовок', group: Object},
       editTreeModalView: false,
       deleteTreeModalView: false,
-      path: []
+      path: [],
+      link: null,
     }
   },
   mounted() {
@@ -81,6 +84,9 @@ export default {
       this.modalOptions.group = group
       this.modalOptions.title = "Удалить подразделение"
       this.deleteTreeModalView = true
+    },
+        onLinkUpdate(link) {
+      this.link = link
     },
     onDelete(id) {
       axios.delete('api/group/', {params: {group_id: id},}).then(response => {
